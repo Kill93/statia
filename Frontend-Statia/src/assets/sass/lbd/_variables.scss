@@ -1,0 +1,58 @@
+
+$padding-zero:                   0px !default;
+
+$margin-bottom:                0 0 10px 0 !default;
+$border-radius-small:           3px !default;
+$border-radius-base:            4px !default;
+$border-radius-large:           6px !default;
+$border-radius-extreme:        10px !default;
+
+$border-radius-large-top:      $border-radius-large $border-radius-large 0 0 !default;
+$border-radius-large-bottom:   0 0 $border-radius-large $border-radius-large !default;
+
+$btn-round-radius:             30px !default;
+
+$font-weight-light:          300 !default;
+$font-weight-normal:         400 !default;
+$font-weight-semi:           500 !default;
+$font-weight-bold:           600 !default;
+
+$line-height-general:          1.5 !default;
+$line-height:                 20px !default;
+$line-height-lg:              54px !default;
+
+//$sidebar-width:               calc(100% - 260px) !default;
+
+
+$border-radius-top:        10px 10px 0 0 !default;
+$border-radius-bottom:     0 0 10px 10px !default;
+
+$dropdown-shadow:          1px 2px 3px rgba(0, 0, 0, 0.125);
+
+$general-transition-time:  300ms !default;
+
+$slow-transition-time:           370ms !default;
+$dropdown-coordinates:      29px -50px !default;
+
+$fast-transition-time:           150ms !default;
+
+$ultra-fast-transition-time:     100ms  !default;
+
+
+$navbar-padding-a:               10px 15px;
+$navbar-margin-a:                10px  3px;
+
+$navbar-margin-a-btn:            15px 3px;
+$navbar-margin-a-btn-round:      16px 3px;
+
+$navbar-padding-brand:           15px 15px;
+$navbar-margin-brand:             5px  0px;
+
+$navbar-margin-brand-icons:      12px auto;
+
+$navbar-margin-btn:              15px  3px;
+
+
+
+
+

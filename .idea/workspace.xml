@@ -1,0 +1,896 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="13417267-65f4-4ca1-86c7-dfa2c30bf29d" name="Default" comment="" />
+    <ignored path="$PROJECT_DIR$/.tmp/" />
+    <ignored path="$PROJECT_DIR$/temp/" />
+    <ignored path="$PROJECT_DIR$/tmp/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="Statia" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="MatchEvent.vue" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/components/Dashboard/Views/MatchEvent.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="298">
+              <caret line="451" column="29" lean-forward="false" selection-start-line="451" selection-start-column="29" selection-end-line="451" selection-end-column="29" />
+              <folding>
+                <element signature="e#5198#5259#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Card.vue" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/components/UIComponents/Cards/Card.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="225">
+              <caret line="15" column="8" lean-forward="true" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="8" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Modal.vue" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/components/UIComponents/Modal/Modal.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="300">
+              <caret line="20" column="11" lean-forward="false" selection-start-line="20" selection-start-column="11" selection-end-line="20" selection-end-column="11" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#transition#0;n#template#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ViewMatch.vue" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/components/Dashboard/Views/ViewMatch.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="135">
+              <caret line="9" column="14" lean-forward="true" selection-start-line="9" selection-start-column="14" selection-end-line="9" selection-end-column="35" />
+              <folding>
+                <marker date="1522678015994" expanded="true" signature="15284:15367" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/main.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#21#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CreateMatch.vue" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/components/Dashboard/Views/CreateMatch.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="154">
+              <caret line="47" column="44" lean-forward="false" selection-start-line="47" selection-start-column="44" selection-end-line="47" selection-end-column="65" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Matches.vue" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/components/Dashboard/Views/Matches.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1587">
+              <caret line="140" column="3" lean-forward="true" selection-start-line="137" selection-start-column="2" selection-end-line="140" selection-end-column="3" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PreEvent.vue" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/components/Dashboard/Views/PreEvent.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1418">
+              <caret line="97" column="18" lean-forward="true" selection-start-line="97" selection-start-column="18" selection-end-line="97" selection-end-column="18" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DashboardLayout.vue" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/components/Dashboard/Layout/DashboardLayout.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="165">
+              <caret line="95" column="25" lean-forward="false" selection-start-line="95" selection-start-column="25" selection-end-line="95" selection-end-column="25" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>main</find>
+      <find>module</find>
+      <find>webpack-</find>
+      <find>maps</find>
+      <find>extr</find>
+      <find>dev</find>
+      <find>act</find>
+      <find>conso</find>
+      <find>counter</find>
+      <find>this.getM</find>
+      <find>total</find>
+      <find>getTit</find>
+      <find>calc</find>
+      <find>away</find>
+      <find>cons</find>
+      <find>rows2</find>
+      <find>selec</find>
+      <find>color</find>
+      <find>circleP</find>
+      <find>slice</find>
+      <find>number</find>
+      <find>splice</find>
+      <find>el</find>
+      <find>c</find>
+      <find>state</find>
+      <find>status</find>
+      <find>input</find>
+      <find>selectedKPI</find>
+      <find>kpis</find>
+      <find>yellow</find>
+    </findStrings>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/vue-lbd-v1.0.0/src/components/Dashboard/Layout/TopNavbar.vue" />
+        <option value="$PROJECT_DIR$/vue-lbd-v1.0.0/src/assets/sass/lbd/_navbars.scss" />
+        <option value="$PROJECT_DIR$/vue-lbd-v1.0.0/package.json" />
+        <option value="$PROJECT_DIR$/Statia-Frontend/README.md" />
+        <option value="$PROJECT_DIR$/Statia-Frontend/src/components/Dashboard/Layout/TopNavbar.vue" />
+        <option value="$PROJECT_DIR$/Statia-Frontend/src/components/Dashboard/Layout/DashboardLayout.vue" />
+        <option value="$PROJECT_DIR$/Statia-Frontend/src/components/UIComponents/SidebarPlugin/SideBar.vue" />
+        <option value="$PROJECT_DIR$/Users-microservice/app.js" />
+        <option value="$PROJECT_DIR$/Statia-Frontend/src/store/store.js" />
+        <option value="$PROJECT_DIR$/Team-microservice/package.json" />
+        <option value="$PROJECT_DIR$/Statia-Frontend/src/components/Dashboard/Views/ManageTeam.vue" />
+        <option value="$PROJECT_DIR$/Frontend-Statia/src/components/Dashboard/Views/AddPlayers.vue" />
+        <option value="$PROJECT_DIR$/Frontend-Statia/src/components/Dashboard/Views/Register.vue" />
+        <option value="$PROJECT_DIR$/Frontend-Statia/build/webpack.base.conf.js" />
+        <option value="$PROJECT_DIR$/Frontend-Statia/build/dev-server.js" />
+        <option value="$PROJECT_DIR$/Frontend-Statia/build/dev-client.js" />
+        <option value="$PROJECT_DIR$/Frontend-Statia/package.json" />
+        <option value="$PROJECT_DIR$/Frontend-Statia/manifest.yml" />
+        <option value="$PROJECT_DIR$/Frontend-Statia/src/assets/sass/light-bootstrap-dashboard.scss" />
+        <option value="$PROJECT_DIR$/Frontend-Statia/src/assets/styles/app.scss" />
+        <option value="$PROJECT_DIR$/Frontend-Statia/src/assets/sass/lbd/_misc.scss" />
+        <option value="$PROJECT_DIR$/Frontend-Statia/src/assets/sass/lbd/_sidebar-and-main-panel.scss" />
+        <option value="$PROJECT_DIR$/Frontend-Statia/src/components/Dashboard/Views/AddKPI.vue" />
+        <option value="$PROJECT_DIR$/Matches-microservice/package.json" />
+        <option value="$PROJECT_DIR$/Team-microservice/manifest.yml" />
+        <option value="$PROJECT_DIR$/Frontend-Statia/src/components/Dashboard/Views/ManageTeam.vue" />
+        <option value="$PROJECT_DIR$/Team-microservice/app.js" />
+        <option value="$PROJECT_DIR$/Frontend-Statia/src/main.js" />
+        <option value="$PROJECT_DIR$/Frontend-Statia/node_modules/vue-nav-tabs/themes/vue-tabs.css" />
+        <option value="$PROJECT_DIR$/Frontend-Statia/src/components/UIComponents/Cards/Card.vue" />
+        <option value="$PROJECT_DIR$/Frontend-Statia/src/store/store.js" />
+        <option value="$PROJECT_DIR$/Frontend-Statia/src/components/Dashboard/Layout/TopNavbar.vue" />
+        <option value="$PROJECT_DIR$/Frontend-Statia/src/components/Dashboard/Views/Edit-matchDetails.vue" />
+        <option value="$PROJECT_DIR$/Frontend-Statia/src/components/Dashboard/Views/EditMatch.vue" />
+        <option value="$PROJECT_DIR$/Frontend-Statia/src/components/Dashboard/Views/Edit-players.vue" />
+        <option value="$PROJECT_DIR$/Frontend-Statia/src/components/Dashboard/Views/ViewMatch.vue" />
+        <option value="$PROJECT_DIR$/Frontend-Statia/src/components/Dashboard/Views/CreateMatch.vue" />
+        <option value="$PROJECT_DIR$/Frontend-Statia/node_modules/vue-form-wizard/dist/vue-form-wizard.min.css" />
+        <option value="$PROJECT_DIR$/Frontend-Statia/index.html" />
+        <option value="$PROJECT_DIR$/Frontend-Statia/src/components/Dashboard/Layout/Content.vue" />
+        <option value="$PROJECT_DIR$/Frontend-Statia/src/routes/routes.js" />
+        <option value="$PROJECT_DIR$/Frontend-Statia/src/components/Dashboard/Views/Matches.vue" />
+        <option value="$PROJECT_DIR$/Frontend-Statia/src/components/Dashboard/Views/Dashboard.vue" />
+        <option value="$PROJECT_DIR$/Matches-microservice/app.js" />
+        <option value="$PROJECT_DIR$/Frontend-Statia/src/assets/styles/timer.scss" />
+        <option value="$PROJECT_DIR$/Frontend-Statia/src/assets/sass/lbd/_navbars.scss" />
+        <option value="$PROJECT_DIR$/Frontend-Statia/src/components/Dashboard/Views/Home.vue" />
+        <option value="$PROJECT_DIR$/Frontend-Statia/src/components/Dashboard/Layout/DashboardLayout.vue" />
+        <option value="$PROJECT_DIR$/Frontend-Statia/src/components/Dashboard/Views/PreEvent.vue" />
+        <option value="$PROJECT_DIR$/Frontend-Statia/src/components/UIComponents/Cards/Model/Modal.vue" />
+        <option value="$PROJECT_DIR$/Frontend-Statia/src/components/Dashboard/Views/MatchEvent.vue" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsFlowSettings">
+    <service-enabled>true</service-enabled>
+    <exe-path />
+    <other-services-enabled>true</other-services-enabled>
+    <auto-save>true</auto-save>
+  </component>
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="NodeModulesDirectoryManager">
+    <handled-path value="$PROJECT_DIR$/Frontend-Statia/node_modules" />
+    <handled-path value="$PROJECT_DIR$/Matches-microservice/node_modules" />
+    <handled-path value="$PROJECT_DIR$/Team-microservice/node_modules" />
+    <handled-path value="$PROJECT_DIR$/Users-microservice/node_modules" />
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="731" />
+    <option name="y" value="23" />
+    <option name="width" value="709" />
+    <option name="height" value="814" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scratches" />
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Statia" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Statia" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Statia" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Statia" type="462c0819:PsiDirectoryNode" />
+              <item name="Frontend-Statia" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Statia" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Statia" type="462c0819:PsiDirectoryNode" />
+              <item name="Frontend-Statia" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Statia" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Statia" type="462c0819:PsiDirectoryNode" />
+              <item name="Frontend-Statia" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Statia" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Statia" type="462c0819:PsiDirectoryNode" />
+              <item name="Frontend-Statia" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="Dashboard" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Statia" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Statia" type="462c0819:PsiDirectoryNode" />
+              <item name="Frontend-Statia" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="Dashboard" type="462c0819:PsiDirectoryNode" />
+              <item name="Layout" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Statia" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Statia" type="462c0819:PsiDirectoryNode" />
+              <item name="Frontend-Statia" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="Dashboard" type="462c0819:PsiDirectoryNode" />
+              <item name="Views" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Statia" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Statia" type="462c0819:PsiDirectoryNode" />
+              <item name="Frontend-Statia" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="UIComponents" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Statia" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Statia" type="462c0819:PsiDirectoryNode" />
+              <item name="Frontend-Statia" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="UIComponents" type="462c0819:PsiDirectoryNode" />
+              <item name="Cards" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Statia" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Statia" type="462c0819:PsiDirectoryNode" />
+              <item name="Frontend-Statia" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="UIComponents" type="462c0819:PsiDirectoryNode" />
+              <item name="Modal" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Statia" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Statia" type="462c0819:PsiDirectoryNode" />
+              <item name="Matches-microservice" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Statia" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Statia" type="462c0819:PsiDirectoryNode" />
+              <item name="Team-microservice" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Statia" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Statia" type="462c0819:PsiDirectoryNode" />
+              <item name="Users-microservice" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="settings.editor.selected.configurable" value="Settings.JavaScript" />
+    <property name="JavaScriptWeakerCompletionTypeGuess" value="true" />
+    <property name="nodejs_interpreter_path" value="/usr/local/bin/node" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="HbShouldOpenHtmlAsHb" value="" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Frontend-Statia/src/components/UIComponents" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/Frontend-Statia" />
+      <recent name="$PROJECT_DIR$/Frontend-Statia/src/components/sidebar" />
+      <recent name="$PROJECT_DIR$/frontend-statia/static" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/frontend-statia/src/assets" />
+      <recent name="$PROJECT_DIR$/frontend-statia" />
+      <recent name="$PROJECT_DIR$/frontend-statia/static" />
+      <recent name="$PROJECT_DIR$/Frontend-VueJS/app" />
+      <recent name="$PROJECT_DIR$/Frontend-VueJS/app/components" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="13417267-65f4-4ca1-86c7-dfa2c30bf29d" name="Default" comment="" />
+      <created>1517347374052</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1517347374052</updated>
+      <workItem from="1517347377776" duration="7242000" />
+      <workItem from="1517787166460" duration="28000" />
+      <workItem from="1517864103523" duration="1854000" />
+      <workItem from="1517867251088" duration="3301000" />
+      <workItem from="1517957698090" duration="5494000" />
+      <workItem from="1518015157255" duration="712000" />
+      <workItem from="1518035669918" duration="17483000" />
+      <workItem from="1518101959760" duration="521000" />
+      <workItem from="1518129590087" duration="3196000" />
+      <workItem from="1518294710911" duration="14467000" />
+      <workItem from="1518386524534" duration="2456000" />
+      <workItem from="1518433170280" duration="517000" />
+      <workItem from="1518444423965" duration="540000" />
+      <workItem from="1518474322657" duration="7889000" />
+      <workItem from="1518521738608" duration="2832000" />
+      <workItem from="1518644767385" duration="9086000" />
+      <workItem from="1518797078670" duration="8631000" />
+      <workItem from="1518815378588" duration="11320000" />
+      <workItem from="1518901047774" duration="604000" />
+      <workItem from="1518985149861" duration="578000" />
+      <workItem from="1519037364854" duration="1076000" />
+      <workItem from="1519048770537" duration="1281000" />
+      <workItem from="1519075547590" duration="494000" />
+      <workItem from="1519141454205" duration="535000" />
+      <workItem from="1519150770601" duration="6486000" />
+      <workItem from="1519251890845" duration="10752000" />
+      <workItem from="1519345761574" duration="9861000" />
+      <workItem from="1519356545093" duration="546000" />
+      <workItem from="1519492580778" duration="10430000" />
+      <workItem from="1519601802499" duration="689000" />
+      <workItem from="1519640389244" duration="1901000" />
+      <workItem from="1519679187868" duration="3530000" />
+      <workItem from="1519748007273" duration="7393000" />
+      <workItem from="1519773337325" duration="10055000" />
+      <workItem from="1519812498282" duration="509000" />
+      <workItem from="1519853343027" duration="16719000" />
+      <workItem from="1519916574181" duration="12020000" />
+      <workItem from="1520009568157" duration="4565000" />
+      <workItem from="1520017450185" duration="5324000" />
+      <workItem from="1520032739780" duration="4931000" />
+      <workItem from="1520198905588" duration="3800000" />
+      <workItem from="1520262563373" duration="462000" />
+      <workItem from="1520297887261" duration="785000" />
+      <workItem from="1520330843337" duration="470000" />
+      <workItem from="1520852346910" duration="497000" />
+      <workItem from="1521565002110" duration="1992000" />
+      <workItem from="1521573160321" duration="7040000" />
+      <workItem from="1521727585909" duration="6904000" />
+      <workItem from="1521759394002" duration="7299000" />
+      <workItem from="1521824740432" duration="6327000" />
+      <workItem from="1521841041113" duration="6011000" />
+      <workItem from="1522053157956" duration="16781000" />
+      <workItem from="1522145152301" duration="18766000" />
+      <workItem from="1522233501460" duration="16875000" />
+      <workItem from="1522317547000" duration="14334000" />
+      <workItem from="1522506944141" duration="4065000" />
+      <workItem from="1522676876754" duration="6247000" />
+      <workItem from="1522757663282" duration="13207000" />
+      <workItem from="1522791132054" duration="4492000" />
+      <workItem from="1522841977368" duration="22429000" />
+      <workItem from="1522926176094" duration="10819000" />
+      <workItem from="1522942217397" duration="144000" />
+      <workItem from="1522942723580" duration="1401000" />
+      <workItem from="1522998825725" duration="27463000" />
+      <workItem from="1523050331002" duration="9427000" />
+      <workItem from="1523266585471" duration="812000" />
+      <workItem from="1523399872692" duration="3481000" />
+      <workItem from="1523636997957" duration="22647000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="442825000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="23" width="1440" height="814" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20789288" sideWeight="0.49345794" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.45643154" sideWeight="0.5024665" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24947146" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25797504" sideWeight="0.5024665" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20789288" sideWeight="0.506542" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32545203" sideWeight="0.49753347" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+    <layout-to-restore>
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.45643154" sideWeight="0.5024665" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20972222" sideWeight="0.5024665" order="9" side_tool="true" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20789288" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32545203" sideWeight="0.49753347" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24947146" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+    </layout-to-restore>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$USER_HOME$" />
+    </ignored-roots>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="11" />
+    </breakpoint-manager>
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/build/dev-client.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/build/dev-server.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="54" lean-forward="false" selection-start-line="11" selection-start-column="54" selection-end-line="11" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/assets/sass/light-bootstrap-dashboard.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="3" lean-forward="false" selection-start-line="9" selection-start-column="3" selection-end-line="9" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/manifest.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/assets/styles/bootstrap-variable-overrides.scss" />
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/assets/css/demo.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/assets/sass/lbd/_variables.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/assets/sass/lbd/_typography.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-715">
+          <caret line="18" column="29" lean-forward="false" selection-start-line="18" selection-start-column="29" selection-end-line="18" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/assets/sass/lbd/_misc.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Team-microservice/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/assets/sass/lbd/_sidebar-and-main-panel.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="14" column="26" lean-forward="false" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Matches-microservice/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="42" lean-forward="false" selection-start-line="6" selection-start-column="42" selection-end-line="6" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Users-microservice/manifest.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="13" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="4" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Team-microservice/manifest.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="10" lean-forward="true" selection-start-line="4" selection-start-column="10" selection-end-line="4" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/node_modules/vue-nav-tabs/themes/vue-tabs.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="47" column="27" lean-forward="true" selection-start-line="47" selection-start-column="27" selection-end-line="47" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/store/store.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="29" column="4" lean-forward="false" selection-start-line="29" selection-start-column="4" selection-end-line="29" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Users-microservice/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/components/Dashboard/Layout/TopNavbar.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="59" lean-forward="true" selection-start-line="3" selection-start-column="59" selection-end-line="3" selection-end-column="71" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/App.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/components/UIComponents/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/globalComponents.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/globalDirectives.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/components/Dashboard/Views/Analysis.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="11" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/components/Dashboard/Views/EditMatch.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="930">
+          <caret line="64" column="14" lean-forward="true" selection-start-line="64" selection-start-column="14" selection-end-line="64" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/components/Dashboard/Views/Register.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="146">
+          <caret line="18" column="66" lean-forward="false" selection-start-line="18" selection-start-column="51" selection-end-line="18" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/components/Dashboard/Views/AddKPI.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="746">
+          <caret line="127" column="15" lean-forward="false" selection-start-line="127" selection-start-column="15" selection-end-line="127" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/components/Dashboard/Views/AddPlayers.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="246">
+          <caret line="86" column="9" lean-forward="true" selection-start-line="75" selection-start-column="8" selection-end-line="86" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/components/Dashboard/Views/Login.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="22" column="55" lean-forward="false" selection-start-line="22" selection-start-column="55" selection-end-line="22" selection-end-column="71" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/node_modules/vue-form-wizard/dist/vue-form-wizard.min.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="2722" lean-forward="false" selection-start-line="0" selection-start-column="2717" selection-end-line="0" selection-end-column="2722" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-12">
+          <caret line="77" column="28" lean-forward="true" selection-start-line="77" selection-start-column="28" selection-end-line="77" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="64" lean-forward="false" selection-start-line="13" selection-start-column="64" selection-end-line="13" selection-end-column="64" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/components/Dashboard/Layout/Content.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="28" lean-forward="true" selection-start-line="9" selection-start-column="28" selection-end-line="9" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/routes/routes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="60" lean-forward="false" selection-start-line="18" selection-start-column="60" selection-end-line="18" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/components/Dashboard/Views/Dashboard.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-534">
+          <caret line="24" column="101" lean-forward="false" selection-start-line="24" selection-start-column="101" selection-end-line="24" selection-end-column="101" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/components/Dashboard/Views/ManageTeam.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="47" lean-forward="false" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/components/Dashboard/Views/Edit-players.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="38" column="10" lean-forward="false" selection-start-line="38" selection-start-column="10" selection-end-line="39" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Team-microservice/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="278" column="25" lean-forward="true" selection-start-line="278" selection-start-column="25" selection-end-line="278" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/assets/styles/app.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="61" lean-forward="false" selection-start-line="1" selection-start-column="61" selection-end-line="1" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/assets/styles/timer.scss" />
+    <entry file="file://$PROJECT_DIR$/Matches-microservice/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="188">
+          <caret line="641" column="41" lean-forward="false" selection-start-line="641" selection-start-column="41" selection-end-line="641" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/assets/sass/lbd/_navbars.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4785">
+          <caret line="319" column="1" lean-forward="false" selection-start-line="319" selection-start-column="1" selection-end-line="319" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/components/Dashboard/Views/Home.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1395">
+          <caret line="93" column="3" lean-forward="false" selection-start-line="83" selection-start-column="2" selection-end-line="93" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/components/Dashboard/Views/CreateMatch.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="47" column="44" lean-forward="false" selection-start-line="47" selection-start-column="44" selection-end-line="47" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/components/Dashboard/Layout/DashboardLayout.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="95" column="25" lean-forward="false" selection-start-line="95" selection-start-column="25" selection-end-line="95" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/components/Dashboard/Views/Matches.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1587">
+          <caret line="140" column="3" lean-forward="true" selection-start-line="137" selection-start-column="2" selection-end-line="140" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/components/Dashboard/Views/PreEvent.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1418">
+          <caret line="97" column="18" lean-forward="true" selection-start-line="97" selection-start-column="18" selection-end-line="97" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/components/UIComponents/Modal/Modal.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" column="11" lean-forward="false" selection-start-line="20" selection-start-column="11" selection-end-line="20" selection-end-column="11" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#transition#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/components/UIComponents/Cards/Card.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="8" lean-forward="true" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/components/Dashboard/Views/ViewMatch.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="14" lean-forward="true" selection-start-line="9" selection-start-column="14" selection-end-line="9" selection-end-column="35" />
+          <folding>
+            <marker date="1522678015994" expanded="true" signature="15284:15367" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Frontend-Statia/src/components/Dashboard/Views/MatchEvent.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="451" column="29" lean-forward="false" selection-start-line="451" selection-start-column="29" selection-end-line="451" selection-end-column="29" />
+          <folding>
+            <element signature="e#5198#5259#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

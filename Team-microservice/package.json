@@ -1,0 +1,17 @@
+{
+  "name": "team-microservice",
+  "version": "1.0.0",
+  "description": "microservice for managing teams and kpis",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "killian nolan",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "mysql": "^2.15.0",
+    "nodemon": "^1.15.1"
+  }
+}
