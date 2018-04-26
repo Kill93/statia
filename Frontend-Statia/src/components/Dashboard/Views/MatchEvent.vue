@@ -1,6 +1,5 @@
 <template>
   <div class="matchevent">
-    {{ kpiCollected }}
 
     <sweet-modal ref = 'mod' overlay-theme = "dark">
       <table class="table">
@@ -38,7 +37,9 @@
           <td class = "match">
             <select v-model="locationCollected" class="form-control" >
               <option id="null"></option>
-              <option v-for="row in items" :class=row :value="row.region" >{{ row.region }}</option>
+              <option  value="Opposition Third" >{{ items[0].region }}</option>
+              <option  value="Middle" >{{ items[1].region }}</option>
+              <option  value="Own Third" >{{ items[2].region }}</option>
             </select>
           </td>
         </tr>
@@ -48,6 +49,7 @@
     </sweet-modal>
 
     <sweet-modal ref = 'swap' overlay-theme = "dark">
+      <h2> Make a Substitution</h2>
 
       <table class="table">
         <tbody>
@@ -68,40 +70,125 @@
       </table>
     </sweet-modal>
 
+    <sweet-modal ref = 'time' overlay-theme = "dark">
+
+      <table class="table" id = "timeTable">
+        <tbody>
+        <tr>
+          <th scope="col">TIME</th>
+          <td class><input type="number" v-model="minutes"> : <input type="text" v-model="seconds"></td>
+        </tr>
+        <button type="button" @click="closeTime" class="btn btn-success btn-lg">Save!</button>
+        </tbody>
+      </table>
+    </sweet-modal>
+
     <div class="container-fluid">
       <div class="row">
         <div class="col-12">
           <card>
+            {{ kpis.length }}
          <div class="frame">
            <div class="parent1">
              <ul class="nav">
                <li class = "teams">{{ team_name}}</li>
                <li class = "score">{{homeGoals}} - {{homePoints}}</li>
-               <li class = 'time'>{{ minutes }} : {{ seconds }}</li>
+               <li class = 'time' @click="changeTime" >{{ minutes }} : {{ seconds }}</li>
                <li class = "score">{{awayGoals}} - {{awayPoints}}</li>
                <li class = "teams">{{ opposition }}</li>
              </ul>
            </div>
             <div id="pitch">
-                <div id="left">
+              <div class="container-fluid" id = "analysis" v-if="liveKPIs=='yes'">
+                <vue-tabs>
+                  <v-tab title="Team Statistics">
+                    <div class="container-stats" >
+                      <div class = "stats">
+                        <table class="stats-table">
+
+                          <tbody v-for="titles in stats">
+                          <tr>
+                            <td class = "homeST">{{ titles.home }}</td>
+                            <th scope="col" colspan="2">{{ titles.title}}</th>
+                            <td class = "awayST" >{{ titles.away }}</td>
+                          </tr>
+                          <!--<tr :id='titles.kpi_title' style="visibility: hidden">-->
+                            <!--<td class = "homeST">{{ titles.player_name }} : {{ titles.quantity }}</td>-->
+                            <!--<td class="hi" scope="col" colspan="2"></td>-->
+                            <!--<td class = "awayST" >{{ titles.player_number }} : {{ titles.quantity }}</td>-->
+                          <!--</tr>-->
+                          <br>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </v-tab>
+
+                  <v-tab title="Player Statistics">
+                    <div class="container-stats" >
+                      <div class = "stats">
+                        <table class="stats-table">
+                          <tbody v-for="titles in playerKPITitles">
+                          <tr>
+                            <th class = "playerKPI" > {{ titles.kpi_title}} </th>
+                          </tr>
+                          <tr>
+                            <td class = "note1" > {{ playa(titles.kpi_title, 'home') }} </td>
+                            <td class = "note2" > {{ playa(titles.kpi_title, 'away') }}</td>
+                          </tr>
+                          <!--<tr>-->
+                            <!--<td class = "homeST">{{ titles.player_name }}</td>-->
+                            <!--<th scope="col" colspan="2">{{ titles.kpi_title}}</th>-->
+                            <!--<td class = "awayST" >{{ titles.quantity }}</td>-->
+                          <!--</tr>-->
+                          <br>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </v-tab>
+
+                  <v-tab title="Events TimeLine" class="active">
+                    <br>
+                    <table class="table table-striped" id = "events">
+                    <thead class="thead-dark">
+                    <tr>
+                    <th scope="col">Minute</th>
+                    <th scope="col">
+                    </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="line in kpiListCollected">
+                    <td>{{ line.time }}'</td>
+                    <td>{{ line.kpi_title }} for {{ line.team_id }} by number {{ line.player }}</td>
+                    </tr>
+                    </tbody>
+                    </table>
+                  </v-tab>
+                </vue-tabs>
+
+              </div>
+            <div id = "matchScreen">
+                <div id="left" v-if="liveKPIs=='no'">
                   <ul>
                     <li class="li" v-for="m in left" :id=m.kpi_title v-on:click.prevent='selectKPI(m.kpi_title,m.kpi_id)'>
                       <a>{{ m.kpi_title }}</a>
                     </li>
                   </ul>
                 </div>
-                <div id="middle">
+                <div id="middle" v-if="liveKPIs=='no'">
                   <img id="pitchSVG" src="../../../../static/img/pitch.svg">
                   <div id="player">
                     <div v-for="positions in squadmembers" v-if="positions.position != 'SUB'">
-                      <div class="circle" :id=positions.position v-on:click.prevent='select(positions.position, positions.player_name)' >
+                      <div class="circle" :id=positions.position v-on:click.prevent='select(positions.position, positions.player_name, positions.player_id)' >
                         {{ positions.squad_number }}
                         <i>{{ positions.player_name }}</i>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div id="right">
+                <div id="right" v-if="liveKPIs=='no'">
                   <ul>
                     <li class="li" v-for="m in right" :id=m.kpi_title v-on:click.prevent='selectKPI(m.kpi_title,m.kpi_id)'>
                       {{ m.kpi_title }}
@@ -109,61 +196,66 @@
                   </ul>
               </div>
             </div>
+         </div>
 
-           <div class = "parent3">
-               <ul class="nav">
-                 <li v-for="positions in squadmembers" v-if="positions.position == 'SUB'" v-on:click.prevent='makeSub(positions.player_name, positions.player_id, positions.position)'>
-                   <div class="circleS" :id=positions.position>
-                     {{ positions.squad_number }}
-                     <i>{{ positions.player_name }}</i>
-                   </div>
-                 </li>
-               </ul>
-           </div>
+           <!--<h2> Substitutes</h2>-->
+           <!--<div class = "parent3" v-if="liveKPIs=='no'">-->
+               <!--<ul class="nav">-->
+                 <!--<li v-for="positions in squadmembers" v-if="positions.position == 'SUB'" v-on:click.prevent='makeSub(positions.player_name, positions.player_id, positions.position)'>-->
+                   <!--<div class="circleS" :id=positions.position>-->
+                     <!--{{ positions.squad_number }}-->
+                     <!--<i>{{ positions.player_name }}</i>-->
+                   <!--</div>-->
+                 <!--</li>-->
+               <!--</ul>-->
+           <!--</div>-->
 
            <div class="parent2">
              <ul class="nav">
-               <li>Item 1</li>
-               <li>Item</li>
-               <li><button  v-if="stopwatchStatus=='paused'" id="start" @click="timer">START</button><button v-if="stopwatchStatus=='going'" id="stop" @click="pause">STOP</button></li>
+               <li><button>SUBS</button></li>
+               <li><button id="liveKPIs" v-if="liveKPIs=='no'" @click="viewLiveKPIs">Live Stats</button> <button id="backToMatch" v-if="liveKPIs=='yes'" @click="viewLiveKPIs">Back to Match</button></li>
+               <li><button  v-if="stopwatchStatus=='paused'" id="start" @click="timer">START</button><button v-if="stopwatchStatus=='going'" id="stop" @click="pause">PAUSE</button></li>
              <li><button id="clear" @click="clear">Clear Timer</button></li>
-               <li>Item 1</li>
+               <li><button id="finish" @click="finishMatch">Finish Match</button></li>
              </ul>
            </div>
 
-         </div>
+            </div>
           </card>
         </div>
-
-        {{ kpiListCollected }}
-
       </div>
     </div>
+    {{ kpiListCollected}}
   </div>
 </template>
 <script>
 
   import Card from 'src/components/UIComponents/Cards/Card.vue'
   import axios from "axios";
-  import Vodal from 'vodal';
   import { SweetModal, SweetModalTab } from 'sweet-modal-vue'
+  import {VueTabs, VTab} from 'vue-nav-tabs'
+  import 'vue-nav-tabs/themes/vue-tabs.css'
+  import swal from 'sweetalert'
 
   export default {
     props: ['role', 'user', 'userID','selectedMatch','teamID', 'players', 'KPI_list' ,'teamExist','location','matchesDue', 'matchesComplete', 'team_name', 'team_type', 'awayTeams'],
     components: {
       Card,
-      Vodal,
       SweetModal,
       SweetModalTab,
+      VueTabs,
+      VTab
     },
     data: function() {
       return {
+        homePlayas: [],
         team: '',
         items: [
-          { region: 'Opponents Third' },
+          { region: '' },
           { region: 'Middle' },
-          { region: 'Own Third' },
+          { region: this.team_name + ' Third' },
         ],
+        playerKPITitles:[],
         active: '',
         squadmembers: [],
         selected: null,
@@ -193,7 +285,14 @@
         kpiListCollected: [],
         subName: '',
         subID:'',
-        subOFF:''
+        subOFF:'',
+        liveKPIs: 'no',
+        homeCollected: [],
+        awayCollected: [],
+        stats: [],
+        homePlayerStats: [],
+        awayPlayerStats: [],
+        divStats:[]
       }
     },
     mounted: function() {
@@ -219,7 +318,7 @@
           "match_id": this.selectedMatch,
         }
         axios({
-          url: 'http://localhost:4000/getMatch',
+          url: 'https://matches-microservice.cfapps.io/getMatch',
           method: 'post',
           contentType: 'application/json',
           data: teamUser,
@@ -244,6 +343,7 @@
             this.match = resultsDue
           }
           this.opposition=this.match[0].opposition_name
+          this.items[0].region= this.match[0].opposition_name + ' Third'
         }).catch(error => {
           console.log(error);
         });
@@ -253,7 +353,7 @@
           "match_id": this.selectedMatch,
         }
         axios({
-          url: 'http://localhost:4000/getMatchKPIs',
+          url: 'https://matches-microservice.cfapps.io/getMatchKPIs',
           method: 'post',
           contentType: 'application/json',
           data: teamUser,
@@ -269,22 +369,22 @@
               }
               results.push(matchkpi);
             }
-            console.log(results)
             this.kpis = results
 
             var leftList=[]
             var rightList=[]
 
-            for (var i = 0; i < this.kpis.length/2; i++) {
+            for (var i = 0; i < Math.ceil(this.kpis.length/2); i++) {
               leftList.push(this.kpis[i])
             }
             this.left=leftList
 
-            for (var i = this.kpis.length/2; i < this.kpis.length; i++) {
+            for (var i = Math.floor(this.kpis.length/2) ; i < this.kpis.length; i++) {
               rightList.push(this.kpis[i])
             }
             this.right=rightList
           }
+          console.log(this.left)
         }).catch(error => {
           console.log(error);
         });
@@ -294,7 +394,7 @@
           "matchevent_id": this.selectedMatch,
         }
         axios({
-          url: 'http://localhost:4000/getSquadMembers',
+          url: 'https://matches-microservice.cfapps.io/getSquadMembers',
           method: 'post',
           contentType: 'application/json',
           data: teamUser,
@@ -312,7 +412,6 @@
               }
               results.push(member);
             }
-            console.log(results)
             this.squadmembers = results
           }
         }).catch(error => {
@@ -377,21 +476,31 @@
 
         if (this.team == this.team_name){
           this.teamCollectedID = this.match[0].teamHome_id
+          var collected = {
+            "kpi_title": this.kpiCollected,
+            "kpi_id": this.kpiCollectedID,
+            "time": this.minutes,
+            "player": this.playerCollected,
+            "player_id": this.playerCollectedID,
+            "player_number": '',
+            "pitchLocation": this.locationCollected,
+            "team_id": this.teamCollectedID,
+          }
         }
 
         if (this.team == this.opposition){
           this.teamCollectedID = this.match[0].teamAway_id
-        }
 
-        var collected = {
-          "kpi_title": this.kpiCollected,
-          "kpi_id": this.kpiCollectedID,
-          "time": this.timeCollected,
-          "player": this.playerCollected,
-          "player_id": this.playerCollectedID,
-          "player_number": this.playerNumber,
-          "pitchLocation": this.locationCollected,
-          "team_id": this.teamCollectedID,
+          var collected = {
+            "kpi_title": this.kpiCollected,
+            "kpi_id": this.kpiCollectedID,
+            "time": this.minutes,
+            "player": '',
+            "player_id": '',
+            "player_number": this.playerNumber,
+            "pitchLocation": this.locationCollected,
+            "team_id": this.teamCollectedID,
+          }
         }
 
         this.kpiListCollected.push(collected)
@@ -453,73 +562,425 @@
       },
       calculateScore() {
         var i
-          if ((this.kpiCollectedID == 3 || this.kpiCollectedID == 5) && this.teamCollectedID == this.match[0].teamHome_id) {
+          if ((this.kpiCollectedID == 4 || this.kpiCollectedID == 6) && this.teamCollectedID == this.match[0].teamHome_id) {
             this.homePoints++
           }
-          if ((this.kpiCollectedID == 4 || this.kpiCollectedID == 6) && this.teamCollectedID == this.match[0].teamHome_id) {
+          if ((this.kpiCollectedID == 5 || this.kpiCollectedID == 7) && this.teamCollectedID == this.match[0].teamHome_id) {
             this.homeGoals++
           }
-          if ((this.kpiCollectedID == 3 || this.kpiCollectedID == 5) && this.teamCollectedID == this.match[0].teamAway_id) {
+          if ((this.kpiCollectedID == 4 || this.kpiCollectedID == 6) && this.teamCollectedID == this.match[0].teamAway_id) {
             this.awayPoints++
           }
-          if ((this.kpiCollectedID == 4 || this.kpiCollectedID == 6) && this.teamCollectedID == this.match[0].teamAway_id) {
+          if ((this.kpiCollectedID == 5 || this.kpiCollectedID == 7) && this.teamCollectedID == this.match[0].teamAway_id) {
             this.awayGoals++
           }
           else {
           }
       },
+      changeTime(){
+        if (this.stopwatchStatus =='paused') {
+          this.$refs.time.open()
+        }
+      },
+      closeTime(){
+        this.$refs.time.close()
+      },
+      viewLiveKPIs(){
+        if (this.liveKPIs=='yes') {
+          this.liveKPIs = 'no'
+        }
+        else if (this.liveKPIs=='no') {
+          this.liveKPIs = 'yes'
+          this.calculateStats()
+          this.playerStats()
+        }
+      },
+      calculateStats(){
+        var homeKPI = []
+        var awayKPI = []
+        for (var i = 0; i < this.kpiListCollected.length; i++) {
+
+          var KPI = {
+            "kpi_id": this.kpiListCollected[i].kpi_id,
+            "kpi_title": this.kpiListCollected[i].kpi_title,
+            "team_id": this.kpiListCollected[i].team_id,
+            "quantity": 0
+          }
+
+          var KPIBlank = {
+            "kpi_id": this.kpiListCollected[i].kpi_id,
+            "kpi_title": this.kpiListCollected[i].kpi_title,
+            "team_id": '',
+            "quantity": 0
+          }
+
+          if (this.kpiListCollected[i].team_id == this.teamID) {
+            homeKPI.push(KPI)
+            KPIBlank.team_id= this.match[0].teamAway_id
+            awayKPI.push(KPIBlank)
+          }
+          else {
+            awayKPI.push(KPI)
+            KPIBlank.team_id= this.teamID
+            homeKPI.push(KPIBlank)
+          }
+        }
+        this.loopHome(homeKPI)
+        this.loopAway(awayKPI)
+
+        var stats = []
+
+        for (var x = 0; x < this.homeCollected.length; x++) {
+          for (var i = 0; i < this.awayCollected.length; i++) {
+            if (this.homeCollected[x].kpi_id == this.awayCollected[i].kpi_id) {
+
+              var KPI = {
+                "kpi_id": this.homeCollected[x].kpi_id,
+                "title": this.homeCollected[x].kpi_title,
+                "home": this.homeCollected[x].quantity,
+                "away": this.awayCollected[i].quantity,
+              }
+              stats.push(KPI)
+            }
+          }
+        }
+        this.stats=stats;
+        this.playerStats()
+      },
+      removeDuplicates(originalArray, prop) {
+        var newArray = [];
+        var lookupObject  = {};
+
+        for(var i in originalArray) {
+          lookupObject[originalArray[i][prop]] = originalArray[i];
+        }
+
+        for(i in lookupObject) {
+          newArray.push(lookupObject[i]);
+        }
+        return newArray;
+      },
+      loopHome(homeKPI){
+        var i
+        var x
+        var common = []
+        var zero = []
+        for (x = 0; x < this.kpiListCollected.length; x++ ) {
+          for (i = 0; i < homeKPI.length; i++) {
+            if (this.kpiListCollected[x].kpi_id == homeKPI[i].kpi_id && this.kpiListCollected[x].team_id == homeKPI[i].team_id) {
+              homeKPI[i].quantity++
+            }
+          }
+        }
+
+        for(x = 0; x < homeKPI.length; x++) {
+          for (i = 0; i < homeKPI.length; i++) {
+            if (homeKPI[x].kpi_id == homeKPI[i].kpi_id && homeKPI[x].quantity > homeKPI[i].quantity ) {
+              // this.awayCollected[i]='';
+              homeKPI.splice(i, 1);
+            }
+          }
+        }
+
+        var uniqueArrayZ = this.removeDuplicates(homeKPI, "kpi_id");
+
+        this.homeCollected=uniqueArrayZ
+
+      },
+      loopAway(awayKPI){
+        var i
+        var x
+        var common = []
+        var zero = []
+        for (x = 0; x < this.kpiListCollected.length; x++ ) {
+          for (i = 0; i < awayKPI.length; i++) {
+            if (this.kpiListCollected[x].kpi_id == awayKPI[i].kpi_id && this.kpiListCollected[x].team_id == awayKPI[i].team_id) {
+              awayKPI[i].quantity++
+            }
+          }
+        }
+
+        for(x = 0; x < awayKPI.length; x++) {
+          for (i = 0; i < awayKPI.length; i++) {
+            if (awayKPI[x].kpi_id == awayKPI[i].kpi_id && awayKPI[x].quantity > awayKPI[i].quantity ) {
+              awayKPI.splice(i, 1);
+            }
+          }
+        }
+
+        var uniqueArrayZ = this.removeDuplicates(awayKPI, "kpi_id");
+
+        this.awayCollected=uniqueArrayZ
+
+
+      },
+      finishMatch (){
+        swal({
+          title: "Are you sure you want to finish the match?",
+          text: "The match will be set as finished and you will be brought to the Match Review Section!",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+        })
+          .then((willDelete) => {
+            if (willDelete) {
+              var kpis = []
+              var i
+
+              for (i = 0; i < this.kpiListCollected.length; i++) {
+                var logkpi = {
+                  "matchEvent_id": this.match[0].match_id,
+                  "kpi_id": this.kpiListCollected[i].kpi_id,
+                  "collected_pitch_location": this.kpiListCollected[i].pitchLocation,
+                  "collected_time": this.kpiListCollected[i].time,
+                  "team_id": this.kpiListCollected[i].team_id,
+                  "player_id": this.kpiListCollected[i].player_id,
+                  "player_number": this.kpiListCollected[i].player_number,
+                }
+                kpis.push(logkpi);
+              }
+              console.log(kpis)
+              axios({
+                url: 'https://matches-microservice.cfapps.io/finishmatch',
+                method: 'post',
+                contentType: 'application/json',
+                data: kpis,
+              }).then(result => {
+                if (result.data.status == 'success') {
+                  console.log('success')
+                  this.sleep(2000)
+                  this.$router.push({path: '/admin/matches/viewMatch'})
+                  swal("Success! Your team has been saved!", {
+                    icon: "success",
+                  })
+                } else {
+                }
+              }).catch(error => {
+                console.log(error);
+              });
+            } else {
+            }
+          });
+      },
+      playerStats(){
+        var homePlayers=[]
+        var awayPlayers=[]
+        for(var i =0; i < this.kpiListCollected.length; i++){
+          if(this.kpiListCollected[i].player != '' && this.kpiListCollected[i].team_id == this.teamID) {
+            var homeStat = {
+              "player_name": this.kpiListCollected[i].player,
+              "kpi_title": this.kpiListCollected[i].kpi_title,
+              "team_id": this.kpiListCollected[i].team_id,
+              "quantity": 0
+            }
+            homePlayers.push(homeStat)
+          }
+          if(this.kpiListCollected[i].player_number != '' && this.kpiListCollected[i].team_id == this.match[0].teamAway_id) {
+            var awayStat = {
+              "player_number": this.kpiListCollected[i].player_number,
+              "kpi_title": this.kpiListCollected[i].kpi_title,
+              "team_id": this.kpiListCollected[i].team_id,
+              "quantity": 0
+            }
+            awayPlayers.push(awayStat)
+          }
+        }
+        console.log(homePlayers)
+        this.loopHomePlayers(homePlayers)
+        this.loopAwayPlayers(awayPlayers)
+      },
+      loopHomePlayers(homeKPI){
+        var i
+        var x
+        var common = []
+        var zero = []
+        for (x = 0; x < this.kpiListCollected.length; x++ ) {
+          for (i = 0; i < homeKPI.length; i++) {
+            if (this.kpiListCollected[x].kpi_title == homeKPI[i].kpi_title && this.kpiListCollected[x].player == homeKPI[i].player_name) {
+              homeKPI[i].quantity++
+            }
+          }
+        }
+
+        // for(x = 0; x < homeKPI.length; x++) {
+        //   for (i = 0; i < homeKPI.length; i++) {
+        //     if (homeKPI[x].kpi_title == homeKPI[i].kpi_title && homeKPI[x].quantity > homeKPI[i].quantity ) {
+        //       // this.awayCollected[i]='';
+        //       homeKPI.splice(i, 1);
+        //     }
+        //   }
+        // }
+
+        var uniqueArrayZ = this.removeDuplicates(homeKPI, "player_name");
+
+        this.homePlayerStats=uniqueArrayZ
+
+        var uniqueArrayY=this.removeDuplicates(this.kpiListCollected, "kpi_title");
+        this.playerKPITitles = uniqueArrayY
+
+        console.log(this.homePlayerStats)
+      },
+      loopAwayPlayers(awayKPI){
+        var i
+        var x
+        var common = []
+        var zero = []
+        for (x = 0; x < this.kpiListCollected.length; x++ ) {
+          for (i = 0; i < awayKPI.length; i++) {
+            if (this.kpiListCollected[x].kpi_title == awayKPI[i].kpi_title && this.kpiListCollected[x].team_id == awayKPI[i].team_id && this.kpiListCollected[x].player_number == awayKPI[i].player_number) {
+              awayKPI[i].quantity++
+            }
+          }
+        }
+
+        // for(x = 0; x < awayKPI.length; x++) {
+        //   for (i = 0; i < awayKPI.length; i++) {
+        //     if (awayKPI[x].kpi_title == awayKPI[i].kpi_id && awayKPI[x].quantity > awayKPI[i].quantity ) {
+        //       awayKPI.splice(i, 1);
+        //     }
+        //   }
+        // }
+
+        var uniqueArrayZ = this.removeDuplicates(awayKPI, "player_number");
+
+        this.awayPlayerStats=uniqueArrayZ
+
+
+      },
+      playa(title, type){
+        var results = ''
+        var quantity = ''
+        if( type == 'home') {
+          for (var x = 0; x < this.homePlayerStats.length; x++) {
+            if (this.homePlayerStats[x].kpi_title == title && this.homePlayerStats[x].player_name != '') {
+              results += this.homePlayerStats[x].quantity + ' ' + this.homePlayerStats[x].player_name + '\n'
+            }
+          }
+        }
+          if( type == 'away'){
+            for (var x = 0; x < this.awayPlayerStats.length; x++ ) {
+              if (this.awayPlayerStats[x].kpi_title == title && this.awayPlayerStats[x].player_number != '') {
+                results += this.awayPlayerStats[x].quantity + ' by Number ' + this.awayPlayerStats[x].player_number + '\n'
+              }
+            }
+        }
+
+        return results
+      },
+      sleep(milliseconds) {
+        var start = new Date().getTime();
+        for (var i = 0; i < 1e7; i++) {
+          if ((new Date().getTime() - start) > milliseconds) {
+            break;
+          }
+        }
+      }
     }
   }
 </script>
 <style scoped lang="scss">
   @import '../../../assets/styles/app.scss';
   // include animation styles
-  @import "../../../../node_modules/vodal/common.css";
-  @import "../../../../node_modules/vodal/rotate.css";
   @import url('https://fonts.googleapis.com/css?family=Raleway:200');
 
   .matchevent {
     margin: auto;
+    height: 100vh;
   }
 
-  @media (max-width: 550px) {
-    #pitch {
-      margin: auto;
-      width: 100%;
-      border: 3px solid green;
-      padding: 10px;
-    }
-    #pitchSVG {
-      /*height: 700px;*/
-      width: 100%;
-      margin: auto;
-    }
-  }
+  /*@media (max-width: 550px) {*/
+    /*#pitch {*/
+      /*margin: auto;*/
+      /*width: 100%;*/
+      /*border: 3px solid green;*/
+      /*padding: 10px;*/
+    /*}*/
+    /*#pitchSVG {*/
+      /*!*height: 700px;*!*/
+      /*margin: auto;*/
+      /*height: 380px;*/
+      /*width: 280px;*/
+    /*}*/
+  /*}*/
 
-  @media (min-width: 550px ) {
+  /* Small Screen */
 
-    .frame {
-      width: 90%;
-      height: 100%;
+  @media (max-width: 899px ) {
+    #matchScreen {
+      width: 100%;
+      height: 100vh;
       margin: auto;
-      border: 3px solid green;
-    }
-    #pitch {
-      margin: auto;
-      width: 80%;
-      height:900px;
       display: flex;
       flex-direction: row;
-      overflow: hidden;
-      padding-top: 100px;
-      padding-bottom: 100px;
     }
+
     #pitchSVG {
-      height: 680px;
-      width: 480px;
+      height: 80%;
+      width: 105%;
       margin: auto;
-      margin-right: 100px
+      /*float: right;*/
+      /*margin-right: 1000px;*/
     }
+
+    .circle {
+      position: relative;
+      display: inline-block;
+      width: 33px;
+      padding: 15px 0;
+      line-height: 0;
+      border-radius: 50%;
+      background-color: black;
+      color: white;
+      text-align: center;
+      font-size: .8em;
+      border: 3px solid #40a0e0;
+      cursor: pointer;
+    }
+
+    .circle i , .circleS i {
+      color: white;
+      clear: both;
+      position: absolute;
+      text-align: center;
+      font-size: .8em;
+      font-weight: 400;
+      text-shadow:
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000;
+      margin-top: 30px;
+      margin-left: -50px;
+      width: 100px;
+    }
+
+    .circle.active {
+      background-color: yellow;
+      color: black;
+      width: 4%;
+      padding: 2.5% 0;
+    }
+
+    #left {
+      float: left;
+      width: 20%;
+      height: 100%;
+      /*background-color: grey;*/
+    }
+
+    #right {
+      float: right;
+      width: 20%;
+      /*margin-left: 50px;*/
+    }
+
+    #middle {
+      height: 680px;
+      width: 60%;
+      /*margin:auto;*/
+      /*background-color: yellow;*/
+    }
+
     #pitch ul {
       list-style-type: none;
       width: 100%;
@@ -531,12 +992,12 @@
     #pitch li {
       margin: auto;
       text-align: center;
-      font-size: 1.3em;
+      font-size: .8em;
       overflow: hidden;
-      height: 10%;
+      height: 7%;
       list-style: none;
       border-radius: 5px;
-      line-height: 100%;
+      line-height: 200%;
       font-weight: bold;
       background-color: #F0E68C;
       border-color: black;
@@ -545,25 +1006,358 @@
       margin-bottom: 10px;
     }
 
+    #GK {
+      margin-top: -120px;
+      margin-left: 26%;
+      position: absolute;
+    }
+
+    #LCB {
+      margin-top: -180px;
+      margin-left: 13%;
+      position: absolute;
+    }
+
+    #FB {
+      margin-top: -180px;
+      margin-left: 26%;
+      position: absolute;
+    }
+
+    #RCB {
+      margin-top: -180px;
+      margin-left: 40%;
+      position: absolute;
+    }
+
+    #LWB {
+      margin-top: -240px;
+      margin-left: 13%;
+      position: absolute;
+    }
+
+    #CB {
+      margin-top: -240px;
+      margin-left: 26%;
+      position: absolute;
+    }
+
+    #RWB {
+      margin-top: -240px;
+      margin-left: 40%;
+      position: absolute;
+    }
+
+    #M1 {
+      margin-top: -295px;
+      margin-left: 20%;
+      position: absolute;
+    }
+
+    #M2 {
+      margin-top: -295px;
+      margin-left: 32%;
+      position: absolute;
+    }
+
+    #LWF {
+      margin-top: -380px;
+      margin-left: 13%;
+      position: absolute;
+    }
+
+    #CF {
+      margin-top: -380px;
+      margin-left: 26%;
+      position: absolute;
+    }
+
+    #RWF {
+      margin-top: -380px;
+      margin-left: 40%;
+      position: absolute;
+    }
+
+    #LCF {
+      margin-top: -450px;
+      margin-left: 13%;
+      position: absolute;
+    }
+
+    #FF {
+      margin-top: -450px;
+      margin-left: 26%;
+      position: absolute;
+    }
+
+    #RCF {
+      margin-top: -450px;
+      margin-left: 40%;
+      position: absolute;
+    }
+
+    .time {
+      display: block;
+      width: 100%;
+      padding: 3px 0px 1px !important;
+      background: #32342f;
+      font-size: 2.3em;
+      margin: auto;
+    }
+
+    .score {
+      display: block;
+      width: 100%;
+      font-size: 2.2em;
+      margin:auto;
+      text-align: center;
+    }
+
+    .teams {
+      font-family: 'Raleway', sans-serif;
+      margin: auto;
+      text-align: center;
+      font-size: 1.6em;
+      overflow: hidden;
+      line-height: 100%;
+    }
+  }
+
+  @media (min-width: 900px ) {
+
+    #matchScreen {
+      width: 100%;
+      height: 100%;
+      margin: auto;
+      display: flex;
+      flex-direction: row;
+    }
+
     #left {
-      float: left;
-      width: 20%;
-      /*background-color: grey;*/
+      /*float: right;*/
+      width: 25%;
     }
 
     #right {
-      float: right;
-      width: 20%;
-      /*background-color: yellow;*/
+      /*float: left;*/
+      width: 25%;
       /*margin-left: 50px;*/
+    }
+
+    #pitchSVG {
+      height: 80%;
+      width: 100%;
+      margin: auto;
+
+    }
+
+    .circle {
+      position: relative;
+      display: inline-block;
+      width: 40px;
+      padding: 20px 0;
+      line-height: 0;
+      border-radius: 50%;
+      background-color: black;
+      color: white;
+      text-align: center;
+      font-size: .8em;
+      border: 3px solid #40a0e0;
+      cursor: pointer;
+    }
+
+    .circle i , .circleS i {
+      color: white;
+      clear: both;
+      position: absolute;
+      text-align: center;
+      font-size: .9em;
+      font-weight: 400;
+      text-shadow:
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000;
+      margin-top: 30px;
+      margin-left: -50px;
+      width: 100px;
+    }
+
+    .circle.active {
+      background-color: yellow;
+      color: black;
+      width: 3.5%;
+      padding: 5% 0;
     }
 
     #middle {
       /*background-color: blue;*/
       height: 680px;
-      width: 480px;
+      width: 50%;
+      /*margin:auto;*/
+    }
+
+    #pitch ul {
+      list-style-type: none;
+      width: 100%;
+      /*padding-right: 5px;*/
+      /*padding-left: 10px;*/
+      height: 100%;
+    }
+
+    #pitch li {
+      width:200px;
+      margin: auto;
+      text-align: center;
+      font-size: 1.3em;
+      overflow: hidden;
+      height: 10%;
+      list-style: none;
+      border-radius: 5px;
+      line-height: 200%;
+      font-weight: bold;
+      background-color: #F0E68C;
+      border-color: black;
+      border-style: solid;
+      border-width: thin;
+      margin-bottom: 10px;
+    }
+
+    #GK {
+      margin-top: -130px;
+      margin-left: 260px;
+      position: absolute;
+    }
+
+    #LCB {
+      margin-top: -210px;
+      margin-left: 120px;
+      position: absolute;
+    }
+
+    #FB {
+      margin-top: -210px;
+      margin-left: 260px;
+      position: absolute;
+    }
+
+    #RCB {
+      margin-top: -210px;
+      margin-left: 390px;
+      position: absolute;
+    }
+
+    #LWB {
+      margin-top: -290px;
+      margin-left: 120px;
+      position: absolute;
+    }
+
+    #CB {
+      margin-top: -290px;
+      margin-left: 260px;
+      position: absolute;
+    }
+
+    #RWB {
+      margin-top: -290px;
+      margin-left: 390px;
+      position: absolute;
+    }
+
+    #M1 {
+      margin-top: -365px;
+      margin-left: 200px;
+      position: absolute;
+    }
+
+    #M2 {
+      margin-top: -365px;
+      margin-left: 310px;
+      position: absolute;
+    }
+
+    #LWF {
+      margin-top: -450px;
+      margin-left: 120px;
+      position: absolute;
+    }
+
+    #CF {
+      margin-top: -450px;
+      margin-left: 260px;
+      position: absolute;
+    }
+
+    #RWF {
+      margin-top: -450px;
+      margin-left: 390px;
+      position: absolute;
+    }
+
+    #LCF {
+      margin-top: -550px;
+      margin-left: 120px;
+      position: absolute;
+    }
+
+    #FF {
+      margin-top: -550px;
+      margin-left: 260px;
+      position: absolute;
+    }
+
+    #RCF {
+      margin-top: -550px;
+      margin-left: 390px;
+      position: absolute;
+    }
+
+    .time {
+      display: block;
+      width: 100%;
+      padding: 3px 0px 1px !important;
+      background: #32342f;
+      font-size: 2.5em;
+    }
+
+    .score {
+      display: block;
+      width: 100%;
+      font-size: 2em;
+      margin:auto;
+      text-align: center;
+    }
+
+    .teams {
+      font-family: 'Raleway', sans-serif;
+      margin: auto;
+      text-align: center;
+      font-size: 2em;
+      overflow: hidden;
+      line-height: 100%;
     }
   }
+
+    .frame {
+      width: 100%;
+      height: 100vh;
+      margin: auto;
+      border: 3px solid green;
+      min-width: calc(200px);
+
+    }
+
+    #pitch {
+      margin: auto;
+      width: 100%;
+      height: 100vh;
+      /*display: flex;*/
+      /*flex-direction: row;*/
+      padding-top: 100px;
+      padding-bottom: 100px;
+
+    }
 
   .parent1 ul.nav {
     display: flex;
@@ -587,6 +1381,7 @@
     width: 20%;
     height: 100%;
     text-align: center;
+    line-height: 100%;
   }
 
   .parent1 ul.nav li:last-child {
@@ -601,7 +1396,7 @@
     bottom: 0;
     width: 100%;
     text-align: center;
-    margin-top: -50px;
+    margin-top: -75px;
     background: linear-gradient(-60deg, #46404f 53%, #4B4452 53%);
   }
 
@@ -663,126 +1458,17 @@
     height:100%;
   }
 
-  .circle {
-    position: relative;
-    display: inline-block;
-    width: 3%;
-    padding: 1.5% 0;
-    line-height: 0;
-    border-radius: 50%;
-    background-color: black;
-    color: white;
+  #finish {
     text-align: center;
-    font-size: .8em;
-    border: 3px solid #40a0e0;
-    cursor: pointer;
-  }
-
-  #GK {
-    margin-top: -130px;
-    margin-left: 220px;
-    position: absolute;
-  }
-
-  #LCB {
-    margin-top: -210px;
-    margin-left: 100px;
-    position: absolute;
-  }
-
-  #FB {
-    margin-top: -210px;
-    margin-left: 220px;
-    position: absolute;
-  }
-
-  #RCB {
-    margin-top: -210px;
-    margin-left: 350px;
-    position: absolute;
-  }
-
-  #LWB {
-    margin-top: -290px;
-    margin-left: 100px;
-    position: absolute;
-  }
-
-  #CB {
-    margin-top: -290px;
-    margin-left: 220px;
-    position: absolute;
-  }
-
-  #RWB {
-    margin-top: -290px;
-    margin-left: 350px;
-    position: absolute;
-  }
-
-  #M1 {
-    margin-top: -365px;
-    margin-left: 190px;
-    position: absolute;
-  }
-
-  #M2 {
-    margin-top: -365px;
-    margin-left: 260px;
-    position: absolute;
-  }
-
-  #LWF {
-    margin-top: -450px;
-    margin-left: 100px;
-    position: absolute;
-  }
-
-  #CF {
-    margin-top: -450px;
-    margin-left: 220px;
-    position: absolute;
-  }
-
-  #RWF {
-    margin-top: -450px;
-    margin-left: 350px;
-    position: absolute;
-  }
-
-  #LCF {
-    margin-top: -550px;
-    margin-left: 100px;
-    position: absolute;
-  }
-
-  #FF {
-    margin-top: -550px;
-    margin-left: 220px;
-    position: absolute;
-  }
-
-  #RCF {
-    margin-top: -550px;
-    margin-left: 350px;
-    position: absolute;
-  }
-
-  .circle i , .circleS i {
     color: white;
-    clear: both;
-    position: absolute;
-    text-align: center;
-    font-size: .9em;
-    font-weight: 400;
-    text-shadow:
-      -1px -1px 0 #000,
-      1px -1px 0 #000,
-      -1px 1px 0 #000,
-      1px 1px 0 #000;
-    margin-top: 30px;
-    margin-left: -50px;
-    width: 100px;
+    background: chocolate;
+    border:solid 2px #3E383F;
+    border-radius:5px;
+    letter-spacing: .2em;
+    cursor:pointer;
+    font-size: 90%;
+    width:100%;
+    height:100%;
   }
 
   .popup {
@@ -808,13 +1494,6 @@
     cursor: pointer;
   }
 
-  .circle.active {
-    background-color: yellow;
-    color: black;
-    width: 3.5%;
-    padding: 2% 0;
-  }
-
   th {
     background-color: rgba(29,150,178,1);
     color: white;
@@ -832,33 +1511,34 @@
     color: white;
   }
 
-  .time {
-    display: block;
-    width: 100%;
-    padding: 3px 0px 1px !important;
-    background: #32342f;
-    font-size: 3em;
+  #liveKPIs {
+    text-align: center;
+    color: black;
+    border:solid 2px #3E383F;
+    border-radius:5px;
+    letter-spacing: .2em;
+    cursor:pointer;
+    font-size: 90%;
+    width:100%;
+    height:100%;
   }
 
-  .score {
-    display: block;
-    width: 100%;
-    font-size: 2em;
-    margin:auto;
+  #backToMatch {
     text-align: center;
-  }
-
-  .teams {
-    font-family: 'Raleway', sans-serif;
-    margin: auto;
-    text-align: center;
-    font-size: 2em;
-    overflow: hidden;
-    line-height: 100%;
+    color: black;
+    border:solid 2px #3E383F;
+    border-radius:5px;
+    letter-spacing: .2em;
+    cursor:pointer;
+    font-size: 90%;
+    width:100%;
+    height:100%;
   }
 
   table {
     width:100%;
+    overflow: hidden;
+    height:10%;
   }
 
   .sweet{
@@ -893,10 +1573,9 @@
     text-align: center;
   }
 
-  .parent3 ul.nav li:last-child {
-    border: 0px;
+  h2 {
+    margin-top: -100px;
   }
-
 
   .circleS {
     position: relative;
@@ -912,6 +1591,84 @@
     border: 3px solid #40a0e0;
     cursor: pointer;
   }
+
+  #timeTable input {
+    width: 20%;
+  }
+
+  .stats-table th {
+    margin: auto;
+    text-align: center;
+    width: 50%;
+  }
+
+  .stats-table {
+    margin: auto;
+    width: 99%;
+    text-align: center;
+    clear: both;
+  }
+
+  .container-stats {
+    width: 80%;
+    margin:auto;
+    font-size: 1.1em;
+    /*overflow: hidden;*/
+    /*height: 10%;*/
+  }
+
+  .homeST {
+    float:left;
+  }
+
+  .awayST {
+    float: right;
+  }
+
+  table {
+    width: 85%;
+    margin:auto;
+    /*overflow-y: auto;*/
+    /*overflow-x: hidden;*/
+  }
+
+  #events td {
+    width: 85%;
+    margin:auto;
+  }
+
+  #right, #left {
+    margin-bottom: 20px;
+  }
+
+  .note1 {
+    white-space: pre-line;
+    float: left;
+    width: 50%;
+  }
+
+  .note2 {
+    white-space: pre-line;
+    float: right;
+    width: 50%;
+  }
+
+  .playerKPI {
+    width: 100%;
+    line-height: 2;
+  }
+
+  #analysis {
+    /*margin-left:50%;*/
+    width: 100%;
+  }
+
+  .tab-container {
+    /*background-color: yellow;*/
+    height: 50%;
+    overflow: hidden;
+  }
+
 
 
 </style>

@@ -18,7 +18,7 @@
                 </tr>
                 <tr>
                   <th scope="col">Date</th>
-                  <td class = "match"><datepicker :disabled="disabled" :placeholder=match[0].match_date cd2 v-model="match[0].match_date"></datepicker></td>
+                  <td class = "match"><datepicker :placeholder=match[0].match_date cd2 v-model="match[0].match_date"></datepicker></td>
                 </tr>
                 <tr>
                   <th scope="col">Location</th>
@@ -68,7 +68,7 @@
           "match_id": this.selectedMatch,
         }
         axios({
-          url: 'http://localhost:4000/getMatch',
+          url: 'https://matches-microservice.cfapps.io/getMatch',
           method: 'post',
           contentType: 'application/json',
           data: teamUser,
@@ -125,7 +125,7 @@
           .then((willDelete) => {
             if (willDelete) {
               axios({
-                url: 'http://localhost:4000/editMatchDetails',
+                url: 'https://matches-microservice.cfapps.io/editMatchDetails',
                 method: 'post',
                 contentType: 'application/json',
                 data: this.match,

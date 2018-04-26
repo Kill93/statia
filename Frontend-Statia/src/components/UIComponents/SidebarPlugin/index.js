@@ -2,13 +2,19 @@ import Sidebar from './SideBar.vue'
 import SidebarLink from './SidebarLink.vue'
 
 const SidebarStore = {
+  showSidebar: false,
   sidebarLinks: [
     {
       name: 'Dashboard',
       icon: 'ti-panel',
       path: '/admin/overview'
     }
-  ]
+  ],
+  displaySidebar (value) {
+    this.showSidebar = value
+    console.log('hihi')
+    console.log(this.showSidebar)
+  }
 }
 
 const SidebarPlugin = {

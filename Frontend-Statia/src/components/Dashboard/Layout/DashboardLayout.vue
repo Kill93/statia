@@ -1,6 +1,7 @@
 <template>
-  <div class="dash">
+  <div class="wrapper">
     <side-bar>
+      <!--<mobile-menu slot="content"></mobile-menu>-->
       <sidebar-link v-if="user == 'guest'" to="/admin/home">
         <i class="glyphicon glyphicon-home"></i>
         <p>Home {{ user }}</p>
@@ -33,7 +34,7 @@
     <div class="main-panel">
       <top-navbar @isLoggedIn="isLoggedIn" :user="user" :role="role" :userID="userID"></top-navbar>
 
-      <dashboard-content @selectMatch="selectMatch" @updateMatches="updateMatches" @getTeam="getTeam" @getKPI_list="getKPI_list" :selectedMatch="selectedMatch" :user="user" :role="role" :userID="userID" :KPI_list="KPI_list" :players="players" :teamID="teamID" :location="location" :team_name="team_name" :team_type="team_type" :matchesDue="matchesDue" :matchesReady="matchesReady" :matchesComplete="matchesComplete" :teamExist="teamExist" >
+      <dashboard-content @click="toggleSidebar" @selectMatch="selectMatch" @updateMatches="updateMatches" @getTeam="getTeam" @getKPI_list="getKPI_list" :selectedMatch="selectedMatch" :user="user" :role="role" :userID="userID" :KPI_list="KPI_list" :players="players" :teamID="teamID" :location="location" :team_name="team_name" :team_type="team_type" :matchesDue="matchesDue" :matchesReady="matchesReady" :matchesComplete="matchesComplete" :teamExist="teamExist" >
 
       </dashboard-content>
 
@@ -47,11 +48,13 @@
   import axios from "axios";
   import TopNavbar from './TopNavbar.vue'
   import DashboardContent from './Content.vue'
+  import MobileMenu from './MobileMenu.vue'
 
   export default {
     components: {
       TopNavbar,
       DashboardContent,
+      MobileMenu
     },
     data() {
       return {
@@ -117,7 +120,7 @@
           "team_id": this.teamID,
         }
         axios({
-          url: 'http://localhost:4000/matches',
+          url: 'https://matches-microservice.cfapps.io/matches',
           method: 'post',
           contentType: 'application/json',
           data: teamUser,
@@ -287,6 +290,14 @@
           }
         }
       },
+      getAllKPITitles() {
+        this.getMatches()
+      },
+      toggleSidebar () {
+        if (this.$sidebar.showSidebar) {
+          this.$sidebar.displaySidebar(false)
+        }
+      }
     }
   }
 
@@ -295,8 +306,24 @@
 <style scoped lang="scss">
   @import '../../../assets/styles/app.scss';
 
-  .main-panel {
-    width: 82%;
-  }
+  /*.main-panel {*/
+    /*width: 100%;*/
+  /*}*/
+
+  /*@media (min-width: 991px) {*/
+    /*.main-panel {*/
+      /*width: 100%;*/
+    /*}*/
+  /*}*/
+
+  /*@media (max-width: 991px) {*/
+    /*.sidebar {*/
+      /*display: none;*/
+    /*}*/
+
+    /*.main-panel {*/
+      /*width: 100%;*/
+    /*}*/
+  /*}*/
 
 </style>

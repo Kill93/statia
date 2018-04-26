@@ -8,18 +8,24 @@ app.use(cors());
 var port = process.env.PORT || 4000;
 
 var pool = mysql.createPool({
-    user     : 'bd968bfd137990',
-    password : 'ed6c5842',
+    user     : 'bfbf26b860f82d',
+    password : 'bb8328d7',
     host     : 'us-cdbr-iron-east-05.cleardb.net',
-    database: 'ad_89c00011e2ad773',
+    database: 'ad_92b7970d9a2aa1d',
     port     : 3306
 });
 
 app.post('/matches', function(req, res, next) {
 
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
-    res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+    var allowedOrigins = ['http://statia.cfapps.io', 'http://localhost:8000'];
+    var origin = req.headers.origin;
+    if(allowedOrigins.indexOf(origin) > -1){
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    //res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:8020');
+    res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Access-Control-Allow-Credentials', true);
 
     var body = '';
     req.on('data', function (data) {
@@ -35,7 +41,7 @@ app.post('/matches', function(req, res, next) {
     pool.getConnection(function(err, connection) {
         console.log("connection started")
 
-        connection.query(sql + 'ORDER BY oppositionName' ,(err, rows) => {
+        connection.query(sql + 'ORDER BY dateMatch' ,(err, rows) => {
             if (err) {
                 throw err;
             }
@@ -79,9 +85,15 @@ app.post('/matches', function(req, res, next) {
 
 app.post('/createMatch', function(req, res, next) {
 
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    var allowedOrigins = ['http://statia.cfapps.io', 'http://localhost:8000'];
+    var origin = req.headers.origin;
+    if(allowedOrigins.indexOf(origin) > -1){
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    //res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:8020');
+    res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Access-Control-Allow-Credentials', true);
 
     var body = '';
     req.on('data', function (data) {
@@ -117,9 +129,15 @@ app.post('/createMatch', function(req, res, next) {
 
 app.post('/getAwayTeam', function(req, res, next) {
 
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    var allowedOrigins = ['http://statia.cfapps.io', 'http://localhost:8000'];
+    var origin = req.headers.origin;
+    if(allowedOrigins.indexOf(origin) > -1){
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    //res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:8020');
+    res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Access-Control-Allow-Credentials', true);
 
     var body = '';
     req.on('data', function (data) {
@@ -171,9 +189,15 @@ app.post('/getAwayTeam', function(req, res, next) {
 
 app.post('/getMatch', function(req, res, next) {
 
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
-    res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+    var allowedOrigins = ['http://statia.cfapps.io', 'http://localhost:8000'];
+    var origin = req.headers.origin;
+    if(allowedOrigins.indexOf(origin) > -1){
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    //res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:8020');
+    res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Access-Control-Allow-Credentials', true);
 
     var body = '';
     req.on('data', function (data) {
@@ -230,9 +254,15 @@ app.post('/getMatch', function(req, res, next) {
 
 app.post('/getCollected', function(req, res, next) {
 
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
-    res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+    var allowedOrigins = ['http://statia.cfapps.io', 'http://localhost:8000'];
+    var origin = req.headers.origin;
+    if(allowedOrigins.indexOf(origin) > -1){
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    //res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:8020');
+    res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Access-Control-Allow-Credentials', true);
 
     var body = '';
     req.on('data', function (data) {
@@ -267,6 +297,7 @@ app.post('/getCollected', function(req, res, next) {
                             collected_time: rows[i].collected_time,
                             team_id: rows[i].team_id,
                             player_number: rows[i].player_number,
+                            player_id: rows[i].player_id,
                         }
                         collected.push(obj)
                     }
@@ -290,9 +321,15 @@ app.post('/getCollected', function(req, res, next) {
 
 app.post('/getKPIname', function(req, res, next) {
 
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
-    res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+    var allowedOrigins = ['http://statia.cfapps.io', 'http://localhost:8000'];
+    var origin = req.headers.origin;
+    if(allowedOrigins.indexOf(origin) > -1){
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    //res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:8020');
+    res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Access-Control-Allow-Credentials', true);
 
     var body = '';
     req.on('data', function (data) {
@@ -342,9 +379,15 @@ app.post('/getKPIname', function(req, res, next) {
 
 app.post('/editMatchDetails', function(req, res, next) {
 
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    var allowedOrigins = ['http://statia.cfapps.io', 'http://localhost:8000'];
+    var origin = req.headers.origin;
+    if(allowedOrigins.indexOf(origin) > -1){
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    //res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:8020');
+    res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Access-Control-Allow-Credentials', true);
 
     var body = '';
     req.on('data', function (data) {
@@ -386,9 +429,15 @@ app.post('/editMatchDetails', function(req, res, next) {
 
 app.post('/createMatchdaySquad', function(req, res, next) {
 
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    var allowedOrigins = ['http://statia.cfapps.io', 'http://localhost:8000'];
+    var origin = req.headers.origin;
+    if(allowedOrigins.indexOf(origin) > -1){
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    //res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:8020');
+    res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Access-Control-Allow-Credentials', true);
 
     var body = '';
     req.on('data', function (data) {
@@ -447,9 +496,15 @@ app.post('/createMatchdaySquad', function(req, res, next) {
 
 app.post('/createSquadMember', function(req, res, next) {
 
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    var allowedOrigins = ['http://statia.cfapps.io', 'http://localhost:8000'];
+    var origin = req.headers.origin;
+    if(allowedOrigins.indexOf(origin) > -1){
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    //res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:8020');
+    res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Access-Control-Allow-Credentials', true);
 
     var body = '';
     req.on('data', function (data) {
@@ -488,9 +543,15 @@ app.post('/createSquadMember', function(req, res, next) {
 
 app.post('/saveMatchKPIs', function(req, res, next) {
 
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    var allowedOrigins = ['http://statia.cfapps.io', 'http://localhost:8000'];
+    var origin = req.headers.origin;
+    if(allowedOrigins.indexOf(origin) > -1){
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    //res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:8020');
+    res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Access-Control-Allow-Credentials', true);
 
     var body = '';
     req.on('data', function (data) {
@@ -529,9 +590,15 @@ app.post('/saveMatchKPIs', function(req, res, next) {
 
 app.post('/getMatchKPIs', function(req, res, next) {
 
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
-    res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+    var allowedOrigins = ['http://statia.cfapps.io', 'http://localhost:8000'];
+    var origin = req.headers.origin;
+    if(allowedOrigins.indexOf(origin) > -1){
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    //res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:8020');
+    res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Access-Control-Allow-Credentials', true);
 
     var body = '';
     req.on('data', function (data) {
@@ -584,9 +651,15 @@ app.post('/getMatchKPIs', function(req, res, next) {
 
 app.post('/getSquadMembers', function(req, res, next) {
 
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
-    res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+    var allowedOrigins = ['http://statia.cfapps.io', 'http://localhost:8000'];
+    var origin = req.headers.origin;
+    if(allowedOrigins.indexOf(origin) > -1){
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    //res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:8020');
+    res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Access-Control-Allow-Credentials', true);
 
     var body = '';
     req.on('data', function (data) {
@@ -645,6 +718,189 @@ app.post('/getSquadMembers', function(req, res, next) {
                 connection.release();
                 console.log("connection ended")
             });
+        })
+    })
+});
+
+app.post('/finishMatch', function(req, res, next) {
+
+    var allowedOrigins = ['http://statia.cfapps.io', 'http://localhost:8000'];
+    var origin = req.headers.origin;
+    if(allowedOrigins.indexOf(origin) > -1){
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    //res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:8020');
+    res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Access-Control-Allow-Credentials', true);
+
+    var body = '';
+    req.on('data', function (data) {
+        body += data;
+    });
+
+    req.on('end', function () {
+        "use strict";
+        var obj = JSON.parse(body);
+        console.log(obj.length);
+        let sql = 'INSERT INTO collected_kpi (matchEvent_id, kpi_id, collected_pitch_location, collected_time, team_id, player_number, player_id)' +
+            'VALUES(?,?,?,?,?,?,?)';
+        let sql3 = "UPDATE matchevent SET match_status='complete' WHERE match_id='" + obj[0].matchEvent_id + "'";
+
+        pool.getConnection(function (err, connection) {
+            console.log("connection started")
+            var i
+            for (i = 0; i < obj.length; i++) {
+
+                connection.query(sql, [obj[i].matchEvent_id, obj[i].kpi_id, obj[i].collected_pitch_location, obj[i].collected_time,obj[i].team_id,obj[i].player_number, obj[i].player_id], (err, rows) => {
+                    if (err) {
+                        throw err;
+                    }
+                });
+            }
+
+            connection.query(sql3, (err, rows) => {
+                if (err) {
+                    throw err;
+                }
+            });
+
+            var obj2 = {
+                status: "success",
+            }
+            res.send(obj2);
+            console.log(obj2)
+            connection.release();
+            console.log("connection ended finishing match")
+        })
+    })
+
+
+});
+
+app.post('/getAllKPIs', function(req, res, next) {
+
+    var allowedOrigins = ['http://statia.cfapps.io', 'http://localhost:8000'];
+    var origin = req.headers.origin;
+    if(allowedOrigins.indexOf(origin) > -1){
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    //res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:8020');
+    res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Access-Control-Allow-Credentials', true);
+
+    var body = '';
+    req.on('data', function (data) {
+        body += data;
+    });
+
+    req.on('end', function () {
+        "use strict";
+        var obj = JSON.parse(body);
+
+        let sql = "SELECT * FROM collected_kpi WHERE team_id='"+obj.team_id +"'";
+
+        pool.getConnection(function(err, connection) {
+            console.log("connection started")
+
+            connection.query(sql + 'ORDER BY kpi_id' ,(err, rows) => {
+                if (err) {
+                    throw err;
+                }
+
+                if (rows!=null && rows.length>0) {
+
+                    var collected = []
+                    var i
+                    for (i = 0; i < rows.length; i++) {
+                        var obj = {
+                            status: "success",
+                            collected_id: rows[i].collected_id,
+                            matchEvent_id: rows[i].matchEvent_id,
+                            kpi_id: rows[i].kpi_id,
+                            collected_pitch_location: rows[i].collected_pitch_location,
+                            collected_time: rows[i].collected_time,
+                            team_id: rows[i].team_id,
+                            player_number: rows[i].player_number,
+                            player_id: rows[i].player_id,
+                        }
+                        collected.push(obj)
+                    }
+                    res.send(collected);
+                    console.log(collected)
+                }
+                else{
+                    var obj1 = {
+                        status: "none"
+                    }
+                    res.send(obj1);
+                    console.log(obj1)
+
+                }
+            });
+            connection.release();
+            console.log("connection ended getting match kpi's")
+        })
+    })
+});
+
+app.post('/getAllTitles', function(req, res, next) {
+
+    var allowedOrigins = ['http://statia.cfapps.io', 'http://localhost:8000'];
+    var origin = req.headers.origin;
+    if(allowedOrigins.indexOf(origin) > -1){
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    //res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:8020');
+    res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Access-Control-Allow-Credentials', true);
+
+    var body = '';
+    req.on('data', function (data) {
+        body += data;
+    });
+
+    req.on('end', function () {
+        "use strict";
+
+        let sql = "SELECT * FROM kpi ORDER BY kpi_id";
+
+        pool.getConnection(function(err, connection) {
+            console.log("connection started")
+
+            connection.query(sql ,(err, rows) => {
+                if (err) {
+                    throw err;
+                }
+
+                if (rows!=null && rows.length>0) {
+
+                    var collected = []
+                    var i
+                    for (i = 0; i < rows.length; i++) {
+                        var obj = {
+                            status: "success",
+                            kpi_id: rows[i].kpi_id,
+                            kpi_title: rows[i].kpi_title,
+                        }
+                        collected.push(obj)
+                    }
+                    res.send(collected);
+                    console.log(collected)
+                }
+                else{
+                    var obj1 = {
+                        status: "none"
+                    }
+                    res.send(obj1);
+                    console.log(obj1)
+
+                }
+            });
+            connection.release();
+            console.log("connection ended getting all titles kpi's")
         })
     })
 });

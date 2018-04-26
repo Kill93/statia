@@ -4,6 +4,7 @@ body > .navbar-collapse{
     bottom: 0;
     left: 0;
     width: 18%;
+    min-width: 10px;
     display: block;
     z-index: 1;
     color: #fff;
@@ -99,7 +100,7 @@ body > .navbar-collapse{
                 }
 
                 p{
-                  font-size: 1vw;
+                  font-size: 2em;
                     margin: 0;
                   font-weight: 600;
                     //text-transform: uppercase;
@@ -180,11 +181,11 @@ body > .navbar-collapse{
         background: #000000;
     }
 
-    //&:after{
-    //   @include icon-gradient($new-purple, $purple-color-bottom);
-    //   z-index: 3;
-    //   opacity: 1;
-    //}
+    &:after{
+       @include icon-gradient($new-purple, $purple-color-bottom);
+       z-index: 3;
+       opacity: 1;
+    }
 
     &[data-image]:after,
     &.has-image:after{
@@ -196,9 +197,9 @@ body > .navbar-collapse{
 .main-panel{
     background: rgba(203,203,210,.15);
     float: right;
-    width: 10%;
+    width: 82%;
     min-height: 700px;
-    font-size: 1vw;
+    font-size: 1.5em;
 
     > .content{
         //padding: 30px 15px;
@@ -224,5 +225,69 @@ body > .navbar-collapse{
     -webkit-transition-timing-function: linear,linear;
     transition-timing-function: linear,linear;
     -webkit-overflow-scrolling: touch;
+}
+
+.fixed-plugin{
+
+  .dropdown{
+    .dropdown-menu{
+      border-radius: 10px;
+      li.adjustments-line{
+        border-bottom: 1px solid #ddd;
+      }
+      li{
+        padding: 5px 2px !important;
+      }
+      .button-container{
+        a{
+          font-size: 14px;
+        }
+        &.show{
+          transform-origin: 0 0;
+          left: -303px !important;
+        }
+      }
+
+    }
+  }
+
+}
+
+.fixed-plugin .dropdown .dropdown-menu{
+  top: -40px !important;
+  opacity: 0;
+  left: -303px !important;
+  transform-origin: 0 0;
+}
+.fixed-plugin .dropdown.show .dropdown-menu{
+  opacity: 1;
+  transform-origin: 0 0;
+  left: -303px !important;
+}
+
+.fixed-plugin .dropdown-menu:before,
+.fixed-plugin .dropdown-menu:after{
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 65px;
+  width: 16px;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+
+}
+.fixed-plugin .dropdown-menu:before{
+  border-bottom: 16px solid rgba(0, 0, 0, 0);
+  border-left: 16px solid rgba(0,0,0,0.2);
+  border-top: 16px solid rgba(0,0,0,0);
+  right: -16px;
+}
+
+.fixed-plugin .dropdown-menu:after{
+  border-bottom: 16px solid rgba(0, 0, 0, 0);
+  border-left: 16px solid #fff;
+  border-top: 16px solid rgba(0,0,0,0);
+  right: -15px;
 }
 

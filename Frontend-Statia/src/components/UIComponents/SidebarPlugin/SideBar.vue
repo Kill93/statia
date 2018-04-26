@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar">
+  <div class="sidebar" >
     <div class="sidebar-wrapper">
       <div class="logo">
         <a href="#" class="simple-text">
@@ -17,6 +17,7 @@
           <sidebar-link v-for="(link,index) in sidebarLinks"
                         :key="link.name + index"
                         :to="link.path"
+                        @click="closeNavbar"
                         :link="link">
             <i :class="link.icon"></i>
             <p>{{link.name}}</p>

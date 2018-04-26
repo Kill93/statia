@@ -14,7 +14,7 @@ import EditPlayers from 'src/components/Dashboard/Views/Edit-players.vue'
 import AddKPI from 'src/components/Dashboard/Views/AddKPI.vue'
 import CreateMatch from 'src/components/Dashboard/Views/CreateMatch.vue'
 import ViewMatch from 'src/components/Dashboard/Views/ViewMatch.vue'
-import EditMatch from 'src/components/Dashboard/Views/editMatch.vue'
+import EditMatch from 'src/components/Dashboard/Views/EditMatch.vue'
 import PreEvent from 'src/components/Dashboard/Views/PreEvent.vue'
 import MatchEvent from 'src/components/Dashboard/Views/MatchEvent.vue'
 

@@ -8,18 +8,24 @@ app.use(cors());
 var port = process.env.PORT || 4000;
 
 var pool = mysql.createPool({
-    user     : 'bd968bfd137990',
-    password : 'ed6c5842',
+    user     : 'bfbf26b860f82d',
+    password : 'bb8328d7',
     host     : 'us-cdbr-iron-east-05.cleardb.net',
-    database: 'ad_89c00011e2ad773',
+    database: 'ad_92b7970d9a2aa1d',
     port     : 3306
 });
 
 app.post('/register', function(req, res, next) {
 
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    var allowedOrigins = ['http://statia.cfapps.io', 'http://localhost:8000'];
+    var origin = req.headers.origin;
+    if(allowedOrigins.indexOf(origin) > -1){
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    //res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:8020');
+    res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Access-Control-Allow-Credentials', true);
 
     var body = '';
     req.on('data', function (data) {
@@ -77,9 +83,15 @@ app.post('/register', function(req, res, next) {
 
 app.post('/login', function(req, res, next) {
 
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    var allowedOrigins = ['http://statia.cfapps.io', 'http://localhost:8000'];
+    var origin = req.headers.origin;
+    if(allowedOrigins.indexOf(origin) > -1){
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    //res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:8020');
+    res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Access-Control-Allow-Credentials', true);
 
     var body = '';
     req.on('data', function (data) {
@@ -134,9 +146,15 @@ app.post('/login', function(req, res, next) {
 
 app.get('/users', function(req, res, next) {
 
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
-    res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+    var allowedOrigins = ['http://statia.cfapps.io', 'http://localhost:8000'];
+    var origin = req.headers.origin;
+    if(allowedOrigins.indexOf(origin) > -1){
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    //res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:8020');
+    res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Access-Control-Allow-Credentials', true);
 
     pool.getConnection(function(err, connection) {
         console.log("connection started")

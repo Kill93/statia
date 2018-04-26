@@ -77,6 +77,7 @@
     },
     data() {
       return {
+        awayTeams: [],
         opposition: '',
         oppLocation: '',
         competition: '',
@@ -88,7 +89,37 @@
         }
       }
     },
+    mounted() {
+      this.getAwayTeams()
+    },
     methods: {
+      getAwayTeams() {
+        var teamUser = {
+          "userID": this.userID,
+        }
+        axios({
+          url: 'https://matches-microservice.cfapps.io/getAwayTeam',
+          method: 'post',
+          contentType: 'application/json',
+          data: teamUser,
+        }).then(result => {
+
+          if (result.data.length != '0') {
+            var results = []
+
+            for (var i = 0; i < result.data.length; i++) {
+              var away = {
+                "away_id": result.data[i].away_id,
+                "away_name": result.data[i].away_name,
+              }
+              results.push(away);
+            }
+            this.awayTeams = results
+          }
+        }).catch(error => {
+          console.log(error);
+        });
+      },
       checkvalue() {
         if (this.opposition === "Other")
           document.getElementById("newAway").setAttribute("style", "display: " + 'block')
@@ -122,7 +153,7 @@
         }
         console.log(logMatch)
         axios({
-          url: 'http://localhost:4000/createMatch',
+          url: 'https://matches-microservice.cfapps.io/createMatch',
           method: 'post',
           contentType: 'application/json',
           data: logMatch,

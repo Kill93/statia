@@ -12,6 +12,7 @@
 @import '../../../node_modules/bootstrap/scss/functions';
 
 @import "lbd/variables";
+@import "lbd/mixins";
 
 @import "lbd/typography";
 
@@ -20,6 +21,7 @@
 @import "lbd/sidebar-and-main-panel";
 
 @import "lbd/navbars";
+@import "lbd/responsive";
 
 // Fancy Stuff
 @import "lbd/dropdown";

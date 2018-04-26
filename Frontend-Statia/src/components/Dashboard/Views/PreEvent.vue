@@ -1,11 +1,8 @@
 <template>
   <div id="preevent">
-
-    <button type="button" @click="saveKPIList" class="btn btn-success btn-lg">Create Match!</button>
-
     <form-wizard @on-complete="saveSquad" color="#40a0e0" >
       <h2 slot="title">Pre Match Setup</h2>
-      <tab-content title="KPI Selection">
+      <tab-content title="KPI Selection" class = "stepOneContainer1">
         <h2> Choose your KPI's to collect </h2>
         <h3> You can choose 16 KPI's to collect during a match</h3>
         <div class="container-fluid">
@@ -497,7 +494,7 @@
           "match_id": this.selectedMatch,
         }
         axios({
-          url: 'http://localhost:4000/getMatch',
+          url: 'https://matches-microservice.cfapps.io/getMatch',
           method: 'post',
           contentType: 'application/json',
           data: teamUser,
@@ -706,7 +703,7 @@
           "matchevent_id": this.selectedMatch,
         }
         axios({
-          url: 'http://localhost:4000/createMatchdaySquad',
+          url: 'https://matches-microservice.cfapps.io/createMatchdaySquad',
           method: 'post',
           contentType: 'application/json',
           data: logMatch,
@@ -729,7 +726,7 @@
               squadMembers.push(logPlayers);
             }
             axios({
-              url: 'http://localhost:4000/createSquadMember',
+              url: 'https://matches-microservice.cfapps.io/createSquadMember',
               method: 'post',
               contentType: 'application/json',
               data: squadMembers,
@@ -759,7 +756,7 @@
         }
         console.log(kpiList)
         axios({
-          url: 'http://localhost:4000/saveMatchKPIs',
+          url: 'https://matches-microservice.cfapps.io/saveMatchKPIs',
           method: 'post',
           contentType: 'application/json',
           data: kpiList,
@@ -781,9 +778,13 @@
     width: 80%;
     margin:auto;
   }
+  .stepOneContainer1 {
+    text-align: center;
+  }
   .stepOneContainer {
     display: flex;
     flex-direction: row;
+    text-align: center;
   }
   .stepThreeContainer {
     display: flex;
@@ -805,7 +806,7 @@
   .circle {
     position: relative;
     display: inline-block;
-    width: 7%;
+    width: 8%;
     padding: 4% 0;
     line-height: 0;
     border-radius: 50%;
@@ -813,6 +814,8 @@
     color: white;
     text-align: center;
     font-size: .8em;
+    border: 3px solid #40a0e0;
+    cursor: pointer;
   }
 
   .circle h3 {

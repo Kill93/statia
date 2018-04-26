@@ -22,7 +22,7 @@
             </thead>
             <tbody>
             <tr v-for="matches in matchesComplete">
-              <td class = "match">{{ matches.match_date }}</td>
+              <td class = "match">  {{ date1(matches.match_date) }} </td>
               <td class = "match">{{ matches.match_competition }}</td>
               <td class = "match">{{ matches.opposition_name }}</td>
               <td class = "match"><button type="button" @click="selectMatch(matches.match_id)" class="btn btn-success btn">View Match</button></td>
@@ -44,7 +44,7 @@
             </thead>
             <tbody>
             <tr v-for="matches in matchesDue">
-              <td class = "match">{{ matches.match_date }}</td>
+              <td class = "match">{{ date1(matches.match_date) }}</td>
               <td class = "match">{{ matches.match_competition }}</td>
               <td class = "match">{{ matches.opposition_name }}</td>
               <td class = "match"><button type="button" @click="selectMatch(matches.match_id)" class="btn btn-success btn">View Match</button></td>
@@ -69,6 +69,8 @@
       VueTabs,
       VTab
     },
+    computed: {
+    },
     data() {
       return {
       }
@@ -77,6 +79,9 @@
         this.$emit('updateMatches', '1');
     },
     methods: {
+      date1(date2) {
+        return moment(String(date2)).format('DD - MMM - YYYY')
+      },
       relocate_createMatch(){
         this.$router.push({ path: 'matches/createMatch'})
       },

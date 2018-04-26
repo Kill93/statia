@@ -15,6 +15,11 @@
 <script>
   export default {
     inheritAttrs: false,
+    inject: {
+      autoClose: {
+        default: true
+      }
+    },
     props: {
       link: {
         type: [String, Object],
@@ -32,6 +37,11 @@
       }
     },
     methods: {
+      hideSidebar () {
+        if (this.autoClose && this.$sidebar && this.$sidebar.showSidebar === true) {
+          this.$sidebar.displaySidebar(false)
+        }
+      }
     }
   }
 </script>
