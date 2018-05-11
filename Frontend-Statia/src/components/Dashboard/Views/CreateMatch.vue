@@ -84,9 +84,9 @@
         matchDate: '',
         matchLocation: '',
         oppID: '',
-        disabled: {
-          to: new Date(yyyy, mm, dd), // Disable all dates up to specific date
-        }
+        // disabled: {
+        //   to: new Date(yyyy, mm, dd), // Disable all dates up to specific date
+        // }
       }
     },
     mounted() {

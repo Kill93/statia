@@ -1,12 +1,12 @@
 <template>
   <div class="matchevent">
-
+{{ kpis.length }}
     <sweet-modal ref = 'mod' overlay-theme = "dark">
       <table class="table">
         <tbody>
         <tr>
           <th scope="col">Team</th>
-          <td class = "match">
+          <td class = "form">
             <select v-model="team" class="form-control">
               <option> {{ team_name}} </option>
               <option> {{ opposition }} </option>
@@ -48,14 +48,28 @@
       </table>
     </sweet-modal>
 
-    <sweet-modal ref = 'swap' overlay-theme = "dark">
-      <h2> Make a Substitution</h2>
+    <sweet-modal ref = 'subs' id = "subbs" overlay-theme = "dark">
+      <h3> Make a Substitution</h3>
+
+      <!--<h2> Substitutes</h2>-->
+      <!--<ul class="nav">-->
+      <!--<li v-for="positions in squadmembers" v-if="positions.position == 'SUB'" v-on:click.prevent='makeSub(positions.player_name, positions.player_id, positions.position)'>-->
+      <!--<div class="circleS" :id=positions.position>-->
+      <!--{{ positions.squad_number }}-->
+      <!--<i>{{ positions.player_name }}</i>-->
+      <!--</div>-->
+      <!--</li>-->
+      <!--</ul>-->
 
       <table class="table">
         <tbody>
         <tr>
-          <th scope="col">SUB</th>
-          <td class = "match">{{ subName }}</td>
+        <th scope="col">Sub:</th>
+        <td class = "match">
+          <select v-model="subON" class="form-control">
+            <option v-for="positions in squadmembers" v-if="positions.position == 'SUB'"> {{ positions.player_name }}</option>
+          </select>
+        </td>
         </tr>
         <tr>
           <th scope="col">Swap For:</th>
@@ -64,8 +78,10 @@
               <option v-for="positions in squadmembers" v-if="positions.position != 'SUB'"> {{ positions.player_name }}</option>
             </select>
           </td>
-          <button type="button" @click="confirmSub" class="btn btn-success btn-lg">Confirm!</button>
-        </tr>
+          <br>
+          </tr>
+        <br>
+        <button type="button" @click="confirmSub" class="btn btn-success btn-lg">Confirm!</button>
         </tbody>
       </table>
     </sweet-modal>
@@ -76,7 +92,7 @@
         <tbody>
         <tr>
           <th scope="col">TIME</th>
-          <td class><input type="number" v-model="minutes"> : <input type="text" v-model="seconds"></td>
+          <td><input type="number" v-model="minutes"> : <input type="text" v-model="seconds"></td>
         </tr>
         <button type="button" @click="closeTime" class="btn btn-success btn-lg">Save!</button>
         </tbody>
@@ -87,13 +103,12 @@
       <div class="row">
         <div class="col-12">
           <card>
-            {{ kpis.length }}
          <div class="frame">
            <div class="parent1">
              <ul class="nav">
                <li class = "teams">{{ team_name}}</li>
                <li class = "score">{{homeGoals}} - {{homePoints}}</li>
-               <li class = 'time' @click="changeTime" >{{ minutes }} : {{ seconds }}</li>
+               <li class = 'timeS' @click="changeTime" >{{ minutes }} : {{ seconds }}</li>
                <li class = "score">{{awayGoals}} - {{awayPoints}}</li>
                <li class = "teams">{{ opposition }}</li>
              </ul>
@@ -104,6 +119,7 @@
                   <v-tab title="Team Statistics">
                     <div class="container-stats" >
                       <div class = "stats">
+                      <br>
                         <table class="stats-table">
 
                           <tbody v-for="titles in stats">
@@ -112,11 +128,6 @@
                             <th scope="col" colspan="2">{{ titles.title}}</th>
                             <td class = "awayST" >{{ titles.away }}</td>
                           </tr>
-                          <!--<tr :id='titles.kpi_title' style="visibility: hidden">-->
-                            <!--<td class = "homeST">{{ titles.player_name }} : {{ titles.quantity }}</td>-->
-                            <!--<td class="hi" scope="col" colspan="2"></td>-->
-                            <!--<td class = "awayST" >{{ titles.player_number }} : {{ titles.quantity }}</td>-->
-                          <!--</tr>-->
                           <br>
                           </tbody>
                         </table>
@@ -127,6 +138,7 @@
                   <v-tab title="Player Statistics">
                     <div class="container-stats" >
                       <div class = "stats">
+                        <br>
                         <table class="stats-table">
                           <tbody v-for="titles in playerKPITitles">
                           <tr>
@@ -136,11 +148,6 @@
                             <td class = "note1" > {{ playa(titles.kpi_title, 'home') }} </td>
                             <td class = "note2" > {{ playa(titles.kpi_title, 'away') }}</td>
                           </tr>
-                          <!--<tr>-->
-                            <!--<td class = "homeST">{{ titles.player_name }}</td>-->
-                            <!--<th scope="col" colspan="2">{{ titles.kpi_title}}</th>-->
-                            <!--<td class = "awayST" >{{ titles.quantity }}</td>-->
-                          <!--</tr>-->
                           <br>
                           </tbody>
                         </table>
@@ -160,8 +167,11 @@
                     </thead>
                     <tbody>
                     <tr v-for="line in kpiListCollected">
-                    <td>{{ line.time }}'</td>
-                    <td>{{ line.kpi_title }} for {{ line.team_id }} by number {{ line.player }}</td>
+                    <td class = "eventsTime">{{ line.time }}'</td>
+                      <td class = "eventsDescr" v-if="line.player!=''">{{ line.kpi_title }} for {{ team_name }} by {{ line.player }}</td>
+                      <td class = "eventsDescr" v-if="line.player=='' && line.player_number !=''">{{ line.kpi_title }} for {{ opposition }} by number {{ line.player_number }}</td>
+                      <td class = "eventsDescr" v-if="line.player=='' && line.player_number =='' && line.team_id == teamID">{{ line.kpi_title }} for {{ team_name }}</td>
+                      <td class = "eventsDescr" v-if="line.player=='' && line.player_number =='' && line.team_id !=teamID">{{ line.kpi_title }} for {{ opposition }}</td>
                     </tr>
                     </tbody>
                     </table>
@@ -212,8 +222,8 @@
 
            <div class="parent2">
              <ul class="nav">
-               <li><button>SUBS</button></li>
                <li><button id="liveKPIs" v-if="liveKPIs=='no'" @click="viewLiveKPIs">Live Stats</button> <button id="backToMatch" v-if="liveKPIs=='yes'" @click="viewLiveKPIs">Back to Match</button></li>
+               <li><button id="subsButton" v-on:click.prevent='subs' >SUBS</button></li>
                <li><button  v-if="stopwatchStatus=='paused'" id="start" @click="timer">START</button><button v-if="stopwatchStatus=='going'" id="stop" @click="pause">PAUSE</button></li>
              <li><button id="clear" @click="clear">Clear Timer</button></li>
                <li><button id="finish" @click="finishMatch">Finish Match</button></li>
@@ -225,7 +235,6 @@
         </div>
       </div>
     </div>
-    {{ kpiListCollected}}
   </div>
 </template>
 <script>
@@ -286,6 +295,7 @@
         subName: '',
         subID:'',
         subOFF:'',
+        subON: '',
         liveKPIs: 'no',
         homeCollected: [],
         awayCollected: [],
@@ -374,7 +384,7 @@
             var leftList=[]
             var rightList=[]
 
-            for (var i = 0; i < Math.ceil(this.kpis.length/2); i++) {
+            for (var i = 0; i < Math.floor(this.kpis.length/2); i++) {
               leftList.push(this.kpis[i])
             }
             this.left=leftList
@@ -382,6 +392,7 @@
             for (var i = Math.floor(this.kpis.length/2) ; i < this.kpis.length; i++) {
               rightList.push(this.kpis[i])
             }
+
             this.right=rightList
           }
           console.log(this.left)
@@ -545,20 +556,19 @@
       makeSub(name, id) {
         this.subName=name
         this.subID=id
-        this.$refs.swap.open()
       },
       confirmSub() {
         for (var i = 0; i < this.squadmembers.length; i++) {
           if ( this.squadmembers[i].player_name== this.subOFF){
             for (var x = 0; x < this.squadmembers.length; x++) {
-              if ( this.squadmembers[x].player_name== this.subName){
+              if ( this.squadmembers[x].player_name== this.subON){
                 this.squadmembers[x].position = this.squadmembers[i].position
                 this.squadmembers[i].position = 'SUB'
               }
             }
           }
         }
-        this.$refs.swap.close()
+        this.$refs.subs.close()
       },
       calculateScore() {
         var i
@@ -802,18 +812,18 @@
           }
         }
 
-        // for(x = 0; x < homeKPI.length; x++) {
-        //   for (i = 0; i < homeKPI.length; i++) {
-        //     if (homeKPI[x].kpi_title == homeKPI[i].kpi_title && homeKPI[x].quantity > homeKPI[i].quantity ) {
-        //       // this.awayCollected[i]='';
-        //       homeKPI.splice(i, 1);
-        //     }
-        //   }
-        // }
-
         var uniqueArrayZ = this.removeDuplicates(homeKPI, "player_name");
 
         this.homePlayerStats=uniqueArrayZ
+
+        // for (var n = 0; n < this.homePlayerStats.length; n++) {
+        //   for (var m = 0; m < this.homePlayerStats.length; m++) {
+        //     if (this.homePlayerStats[n].player_name == this.homePlayerStats[m].player_name && this.homePlayerStats[n].kpi_title == this.homePlayerStats[m].kpi_title) {
+        //       this.homePlayerStats.splice(m, 1);
+        //       // this.homePlayerStats[]
+        //     }
+        //   }
+        // }
 
         var uniqueArrayY=this.removeDuplicates(this.kpiListCollected, "kpi_title");
         this.playerKPITitles = uniqueArrayY
@@ -874,6 +884,9 @@
             break;
           }
         }
+      },
+      subs(){
+        this.$refs.subs.open()
       }
     }
   }
@@ -883,57 +896,45 @@
   // include animation styles
   @import url('https://fonts.googleapis.com/css?family=Raleway:200');
 
-  .matchevent {
-    margin: auto;
-    height: 100vh;
-  }
-
-  /*@media (max-width: 550px) {*/
-    /*#pitch {*/
-      /*margin: auto;*/
-      /*width: 100%;*/
-      /*border: 3px solid green;*/
-      /*padding: 10px;*/
-    /*}*/
-    /*#pitchSVG {*/
-      /*!*height: 700px;*!*/
-      /*margin: auto;*/
-      /*height: 380px;*/
-      /*width: 280px;*/
-    /*}*/
-  /*}*/
-
   /* Small Screen */
 
-  @media (max-width: 899px ) {
+  @media (max-width: 1024px ) {
+
+    .matchevent {
+      margin: auto;
+      height: 100vh;
+      width: 100vw;
+    }
+
     #matchScreen {
       width: 100%;
-      height: 100vh;
+      height: 80vh;
       margin: auto;
       display: flex;
       flex-direction: row;
     }
 
     #pitchSVG {
-      height: 80%;
-      width: 105%;
+      height: 90%;
+      width: 130%;
       margin: auto;
+      padding-top: 10px;
+      margin-left: -16%;
       /*float: right;*/
-      /*margin-right: 1000px;*/
     }
 
     .circle {
       position: relative;
       display: inline-block;
-      width: 33px;
-      padding: 15px 0;
+      width: 7.5%;
+      padding: 3.5% 0;
       line-height: 0;
       border-radius: 50%;
       background-color: black;
       color: white;
       text-align: center;
       font-size: .8em;
-      border: 3px solid #40a0e0;
+      border: 4px solid #40a0e0;
       cursor: pointer;
     }
 
@@ -942,14 +943,14 @@
       clear: both;
       position: absolute;
       text-align: center;
-      font-size: .8em;
+      font-size: .97em;
       font-weight: 400;
       text-shadow:
         -1px -1px 0 #000,
         1px -1px 0 #000,
         -1px 1px 0 #000,
         1px 1px 0 #000;
-      margin-top: 30px;
+      margin-top: 85%;
       margin-left: -50px;
       width: 100px;
     }
@@ -957,28 +958,32 @@
     .circle.active {
       background-color: yellow;
       color: black;
-      width: 4%;
-      padding: 2.5% 0;
+      width: 7.5%;
+      padding: 3.5% 0;
     }
 
     #left {
       float: left;
-      width: 20%;
+      width: 21%;
       height: 100%;
-      /*background-color: grey;*/
+      background: linear-gradient(-60deg, #E0E0E0 53%, #D3D3D3 53%);
+      overflow: hidden;
+      border-right: 5px solid black;
     }
 
     #right {
       float: right;
-      width: 20%;
+      width: 21%;
+      height: 100%;
+      background: linear-gradient(-60deg, #E0E0E0 53%, #D3D3D3 53%);
       /*margin-left: 50px;*/
+      border-left: 5px solid black;
     }
 
     #middle {
-      height: 680px;
-      width: 60%;
-      /*margin:auto;*/
-      /*background-color: yellow;*/
+      height: 100%;
+      width: 58%;
+      margin:auto;
     }
 
     #pitch ul {
@@ -986,129 +991,135 @@
       width: 100%;
       padding-right: 5px;
       padding-left: 10px;
+      padding-top: 20px;
       height: 100%;
+      vertical-align: middle;
     }
 
     #pitch li {
       margin: auto;
       text-align: center;
-      font-size: .8em;
-      overflow: hidden;
-      height: 7%;
+      font-size: 1.1em;
+      overflow: SCROLL;
+      height: 11%;
+      color: #303C6C;
       list-style: none;
       border-radius: 5px;
-      line-height: 200%;
+      line-height: 90%;
       font-weight: bold;
-      background-color: #F0E68C;
-      border-color: black;
+      background-color: #fbe8a6;
+      border-color: #f4976c;
       border-style: solid;
       border-width: thin;
       margin-bottom: 10px;
+      padding-top: 10px;
     }
 
     #GK {
-      margin-top: -120px;
-      margin-left: 26%;
+      margin-top: -22%;
+      margin-left: 24%;
       position: absolute;
     }
 
     #LCB {
-      margin-top: -180px;
-      margin-left: 13%;
+      margin-top: -34%;
+      margin-left: 6%;
       position: absolute;
     }
 
     #FB {
-      margin-top: -180px;
-      margin-left: 26%;
+      margin-top: -34%;
+      margin-left: 24%;
       position: absolute;
     }
 
     #RCB {
-      margin-top: -180px;
-      margin-left: 40%;
+      margin-top: -34%;
+      margin-left: 41%;
       position: absolute;
     }
 
     #LWB {
-      margin-top: -240px;
-      margin-left: 13%;
+      margin-top: -47%;
+      margin-left: 6%;
       position: absolute;
     }
 
     #CB {
-      margin-top: -240px;
-      margin-left: 26%;
+      margin-top: -47%;
+      margin-left: 24%;
       position: absolute;
     }
 
     #RWB {
-      margin-top: -240px;
-      margin-left: 40%;
+      margin-top: -47%;
+      margin-left: 41%;
       position: absolute;
     }
 
     #M1 {
-      margin-top: -295px;
-      margin-left: 20%;
+      margin-top: -60%;
+      margin-left: 14%;
       position: absolute;
     }
 
     #M2 {
-      margin-top: -295px;
+      margin-top: -60%;
       margin-left: 32%;
       position: absolute;
     }
 
     #LWF {
-      margin-top: -380px;
-      margin-left: 13%;
+      margin-top: -75%;
+      margin-left: 6%;
       position: absolute;
     }
 
     #CF {
-      margin-top: -380px;
-      margin-left: 26%;
+      margin-top: -75%;
+      margin-left: 24%;
       position: absolute;
     }
 
     #RWF {
-      margin-top: -380px;
-      margin-left: 40%;
+      margin-top: -75%;
+      margin-left: 41%;
       position: absolute;
     }
 
     #LCF {
-      margin-top: -450px;
-      margin-left: 13%;
+      margin-top: -89%;
+      margin-left: 6%;
       position: absolute;
     }
 
     #FF {
-      margin-top: -450px;
-      margin-left: 26%;
+      margin-top: -89%;
+      margin-left: 24%;
       position: absolute;
     }
 
     #RCF {
-      margin-top: -450px;
-      margin-left: 40%;
+      margin-top: -89%;
+      margin-left: 41%;
       position: absolute;
     }
 
-    .time {
+    .timeS {
       display: block;
       width: 100%;
-      padding: 3px 0px 1px !important;
+      padding: 30px 0px 1px !important;
       background: #32342f;
-      font-size: 2.3em;
+      font-size: 2em;
       margin: auto;
+      padding-top: 10px;
     }
 
     .score {
       display: block;
+      padding: 20px 0px 1px !important;
       width: 100%;
-      font-size: 2.2em;
+      font-size: 2.5em;
       margin:auto;
       text-align: center;
     }
@@ -1117,13 +1128,86 @@
       font-family: 'Raleway', sans-serif;
       margin: auto;
       text-align: center;
-      font-size: 1.6em;
+      font-size: 1.4em;
       overflow: hidden;
       line-height: 100%;
     }
+
+    .parent1 {
+      height: 10vh;
+    }
+
+    .parent1 ul.nav {
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+      bottom: 0;
+      height: 100%;
+      width: 100%;
+      text-align: center;
+      background-color: white;
+      /*margin-bottom: 80px;*/
+      background: linear-gradient(-60deg, #46404f 53%, #4B4452 53%);
+      box-shadow: 2px 3px 5px 0px rgba(0,0,0,0.25);
+      font-family: Oxygen, sans-serif;
+      color: white;
+    }
+
+    .parent1 ul.nav li {
+      padding: 10px 15px;
+      border-right: 1px solid black;
+      width: 20%;
+      height: 100%;
+      margin: auto;
+    }
+
+    .parent1 ul.nav li:last-child {
+      border: 0px;
+    }
+
+    .parent2 {
+      height: 10vh;
+    }
+
+    .parent2 ul.nav {
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+      height: 100%;
+      bottom: 0;
+      width: 100%;
+      text-align: center;
+      /*<!--margin-top: -75px;-->*/
+      background: linear-gradient(-60deg, #46404f 53%, #4B4452 53%);
+    }
+
+    .parent2 ul.nav li {
+      padding: 10px 15px;
+      border-right: 1px solid black;
+      width: 20%;
+      height: 90%;
+      text-align: center;
+    }
+
+    .parent2 ul.nav li:last-child {
+      border: 0px;
+    }
+
+    #pitch {
+      margin: auto;
+      width: 100%;
+      height: 80vh;
+      /*display: flex;*/
+      /*flex-direction: row;*/
+    }
   }
 
-  @media (min-width: 900px ) {
+  @media (min-width: 1025px ) {
+
+    .matchevent {
+      margin: auto;
+      height: 100vh;
+    }
 
     #matchScreen {
       width: 100%;
@@ -1184,10 +1268,10 @@
     }
 
     .circle.active {
-      background-color: yellow;
       color: black;
-      width: 3.5%;
-      padding: 5% 0;
+      background-color: yellow;
+      width: 40px;
+      padding: 20px 0;
     }
 
     #middle {
@@ -1214,7 +1298,7 @@
       height: 10%;
       list-style: none;
       border-radius: 5px;
-      line-height: 200%;
+      line-height: 110%;
       font-weight: bold;
       background-color: #F0E68C;
       border-color: black;
@@ -1224,101 +1308,103 @@
     }
 
     #GK {
-      margin-top: -130px;
-      margin-left: 260px;
+      margin-top: -120px;
+      margin-left: 22%;
       position: absolute;
     }
 
     #LCB {
-      margin-top: -210px;
-      margin-left: 120px;
+      margin-top: -190px;
+      margin-left: 10.5%;
       position: absolute;
     }
 
     #FB {
-      margin-top: -210px;
-      margin-left: 260px;
+      margin-top: -190px;
+      margin-left: 22%;
       position: absolute;
     }
 
     #RCB {
-      margin-top: -210px;
-      margin-left: 390px;
+      margin-top: -190px;
+      margin-left: 33%;
       position: absolute;
     }
 
     #LWB {
-      margin-top: -290px;
-      margin-left: 120px;
+      margin-top: -255px;
+      margin-left: 10.5%;
       position: absolute;
     }
 
     #CB {
-      margin-top: -290px;
-      margin-left: 260px;
+      margin-top: -255px;
+      margin-left: 22%;
       position: absolute;
     }
 
     #RWB {
-      margin-top: -290px;
-      margin-left: 390px;
+      margin-top: -255px;
+      margin-left: 33%;
       position: absolute;
     }
 
     #M1 {
-      margin-top: -365px;
-      margin-left: 200px;
+      margin-top: -325px;
+      margin-left: 16%;
       position: absolute;
     }
 
     #M2 {
-      margin-top: -365px;
-      margin-left: 310px;
+      margin-top: -325px;
+      margin-left: 29%;
       position: absolute;
     }
 
     #LWF {
-      margin-top: -450px;
-      margin-left: 120px;
+      margin-top: -390px;
+      margin-left: 10.5%;
       position: absolute;
     }
 
     #CF {
-      margin-top: -450px;
-      margin-left: 260px;
+      margin-top: -390px;
+      margin-left: 22%;
       position: absolute;
     }
 
     #RWF {
-      margin-top: -450px;
-      margin-left: 390px;
+      margin-top: -390px;
+      margin-left: 33%;
       position: absolute;
     }
 
     #LCF {
-      margin-top: -550px;
-      margin-left: 120px;
+      margin-top: -470px;
+      margin-left: 10.5%;
       position: absolute;
     }
 
     #FF {
-      margin-top: -550px;
-      margin-left: 260px;
+      margin-top: -470px;
+      margin-left: 22%;
       position: absolute;
     }
 
     #RCF {
-      margin-top: -550px;
-      margin-left: 390px;
+      margin-top: -470px;
+      margin-left: 33%;
       position: absolute;
     }
 
-    .time {
+    .timeS {
       display: block;
       width: 100%;
       padding: 3px 0px 1px !important;
       background: #32342f;
       font-size: 2.5em;
+      padding-top: 100px;
+      padding-bottom: 100px;
     }
 
     .score {
@@ -1337,15 +1423,58 @@
       overflow: hidden;
       line-height: 100%;
     }
-  }
 
-    .frame {
+    .parent1 ul.nav {
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+      height: 6em;
+      bottom: 0;
       width: 100%;
-      height: 100vh;
-      margin: auto;
-      border: 3px solid green;
-      min-width: calc(200px);
+      text-align: center;
+      background-color: white;
+      margin-bottom:-80px;
+      background: linear-gradient(-60deg, #46404f 53%, #4B4452 53%);
+      box-shadow: 2px 3px 5px 0px rgba(0,0,0,0.25);
+      font-family: Oxygen, sans-serif;
+      color: white;
+    }
 
+    .parent1 ul.nav li {
+      padding: 10px 15px;
+      border-right: 1px solid black;
+      width: 20%;
+      height: 100%;
+      text-align: center;
+      line-height: 100%;
+    }
+
+    .parent1 ul.nav li:last-child {
+      border: 0px;
+    }
+
+    .parent2 ul.nav {
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+      height: 5em;
+      bottom: 0;
+      width: 100%;
+      text-align: center;
+      margin-top: -75px;
+      background: linear-gradient(-60deg, #46404f 53%, #4B4452 53%);
+    }
+
+    .parent2 ul.nav li {
+      padding: 10px 15px;
+      border-right: 1px solid black;
+      width: 20%;
+      height: 100%;
+      text-align: center;
+    }
+
+    .parent2 ul.nav li:last-child {
+      border: 0px;
     }
 
     #pitch {
@@ -1356,61 +1485,17 @@
       /*flex-direction: row;*/
       padding-top: 100px;
       padding-bottom: 100px;
+    }
+  }
+
+    .frame {
+      width: 100%;
+      height: 100%;
+      margin: auto;
+      border: 3px solid green;
+      min-width: calc(200px);
 
     }
-
-  .parent1 ul.nav {
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    height: 5em;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-    background-color: white;
-    margin-bottom:-80px;
-    background: linear-gradient(-60deg, #46404f 53%, #4B4452 53%);
-    box-shadow: 2px 3px 5px 0px rgba(0,0,0,0.25);
-    font-family: Oxygen, sans-serif;
-    color: white;
-  }
-
-  .parent1 ul.nav li {
-    padding: 10px 15px;
-    border-right: 1px solid black;
-    width: 20%;
-    height: 100%;
-    text-align: center;
-    line-height: 100%;
-  }
-
-  .parent1 ul.nav li:last-child {
-    border: 0px;
-  }
-
-  .parent2 ul.nav {
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    height: 5em;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-    margin-top: -75px;
-    background: linear-gradient(-60deg, #46404f 53%, #4B4452 53%);
-  }
-
-  .parent2 ul.nav li {
-    padding: 10px 15px;
-    border-right: 1px solid black;
-    width: 20%;
-    height: 100%;
-    text-align: center;
-  }
-
-  .parent2 ul.nav li:last-child {
-    border: 0px;
-  }
 
   li button{
     width:100%;
@@ -1435,7 +1520,7 @@
   #stop {
     text-align: center;
     color: white;
-    background: #721329;
+    background: #e50000;
     border:solid 2px #590F20;
     border-radius:5px;
     letter-spacing: .2em;
@@ -1448,7 +1533,20 @@
   #clear {
     text-align: center;
     color: white;
-    background: #564E58;
+    background: #05386B;
+    border:solid 2px #3E383F;
+    border-radius:5px;
+    letter-spacing: .2em;
+    cursor:pointer;
+    font-size: 90%;
+    width:100%;
+    height:100%;
+  }
+
+  #subsButton {
+    text-align: center;
+    color: black;
+    background: yellow;
     border:solid 2px #3E383F;
     border-radius:5px;
     letter-spacing: .2em;
@@ -1486,14 +1584,6 @@
     margin: auto;
   }
 
-  li:hover {
-    color: red;
-    background: blue;
-    box-shadow: 0 4px #efa424;
-    top: 2px;
-    cursor: pointer;
-  }
-
   th {
     background-color: rgba(29,150,178,1);
     color: white;
@@ -1513,8 +1603,8 @@
 
   #liveKPIs {
     text-align: center;
-    color: black;
-    border:solid 2px #3E383F;
+    color: white;
+    background: rgba(29,150,178,1);
     border-radius:5px;
     letter-spacing: .2em;
     cursor:pointer;
@@ -1530,7 +1620,7 @@
     border-radius:5px;
     letter-spacing: .2em;
     cursor:pointer;
-    font-size: 90%;
+    font-size: 80%;
     width:100%;
     height:100%;
   }
@@ -1660,13 +1750,43 @@
 
   #analysis {
     /*margin-left:50%;*/
-    width: 100%;
+    /*width: 100%;*/
+    /*height: 75vh;*/
+    /*overflow: scroll;*/
+  }
+
+  #analysis table {
+    /*margin-left:50%;*/
+    /*width: 100%;*/
+    /*height: 75vh;*/
+    /*overflow: scroll;*/
   }
 
   .tab-container {
-    /*background-color: yellow;*/
-    height: 50%;
-    overflow: hidden;
+    max-height: 68vh;
+    overflow: scroll;
+  }
+
+  #events td {
+    width: 50%;
+  }
+
+  .eventsDescr {
+
+  }
+
+  .eventsTime {
+    width: 20%;
+  }
+
+  .form-control {
+    height: 100%;
+    font-size: .7em;
+  }
+
+  select {
+    width: 40%;
+    color: yellow;
   }
 
 

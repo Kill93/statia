@@ -18,11 +18,9 @@
                       </div>
                     </template>
                     <table class="table is-striped is-bordered is-narrow">
-                      <draggable v-model="kpis" :options="{group:'people'}">
                         <tbody v-for="KPI in kpis">
                         <td>{{KPI.KPI_title}} <button @click="moveToSelected(KPI.KPI_title,KPI.KPI_id)"><i class="glyphicon glyphicon-arrow-right"></i></button> </td>
                         </tbody>
-                      </draggable>
                     </table>
                   </card>
                     <card id = "KPI2">
@@ -30,11 +28,9 @@
                         <h3 class="card-title">Selected KPI's {{ selectedKPIs.length }}</h3>
                       </template>
                     <table class="table is-striped is-bordered is-narrow">
-                      <draggable v-model="selectedKPIs" :options="{group:'people'}">
-                        <tbody v-for="selected in selectedKPIs">
+                      <tbody v-for="selected in selectedKPIs">
                         <td><button @click="moveFromSelected(selected.KPI_title)"><i class="glyphicon glyphicon-arrow-left"></i></button> {{selected.KPI_title}} </td>
                         </tbody>
-                      </draggable>
                     </table>
                   </card>
                 </div>
@@ -777,6 +773,7 @@
   #preevent{
     width: 80%;
     margin:auto;
+    height: 100%;
   }
   .stepOneContainer1 {
     text-align: center;

@@ -1,3 +1,4 @@
 applications:
 - name: statia
   instances: 1
+  memory: 1056M

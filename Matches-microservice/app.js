@@ -585,7 +585,6 @@ app.post('/saveMatchKPIs', function(req, res, next) {
             console.log("connection ended")
         })
     })
-
 });
 
 app.post('/getMatchKPIs', function(req, res, next) {

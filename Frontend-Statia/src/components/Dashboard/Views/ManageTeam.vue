@@ -20,7 +20,7 @@
             <div id = "playersTable">
               <table v-if="players.length !=0" class="table is-striped is-bordered is-narrow">
                 <tbody v-for="player in players">
-                <td> {{ player.firstName}} {{ player.lastName}} {{ player.playerID }}</td>
+                <td> {{ player.firstName}} {{ player.lastName}}</td>
                 </tbody>
               </table>
             </div>

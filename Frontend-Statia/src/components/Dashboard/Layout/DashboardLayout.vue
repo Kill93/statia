@@ -4,11 +4,11 @@
       <!--<mobile-menu slot="content"></mobile-menu>-->
       <sidebar-link v-if="user == 'guest'" to="/admin/home">
         <i class="glyphicon glyphicon-home"></i>
-        <p>Home {{ user }}</p>
+        <p>Home</p>
       </sidebar-link>
       <sidebar-link v-if="user != 'guest'" to="/admin/dashboard" >
         <i class="glyphicon glyphicon-dashboard"></i>
-        <p>Dashboard {{ selectedMatch}}</p>
+        <p>Dashboard</p>
       </sidebar-link>
       <sidebar-link v-if="user != 'guest'" to="/admin/manage-team">
         <i class="glyphicon glyphicon-briefcase"></i>

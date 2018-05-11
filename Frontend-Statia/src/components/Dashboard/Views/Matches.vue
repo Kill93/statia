@@ -1,7 +1,6 @@
 <template>
   <div class="matches">
     <div class="container">
-      <h3> Matches {{ selectedMatch }}</h3>
       <hr>
       <div id = "createMatch">
         <button type="button" class="btn btn-info" @click.prevent="relocate_createMatch" >Create Match</button>
@@ -17,7 +16,6 @@
               <th scope="col">Competition</th>
               <th scope="col">Opposition</th>
               <th scope="col"></th>
-
             </tr>
             </thead>
             <tbody>

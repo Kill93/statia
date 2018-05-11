@@ -3,7 +3,6 @@
 
     <i v-show="loading" class="fa fa-spinner fa-spin"></i>
 
-
     <div class="container-fluid">
       <div class="row">
         <div class="col-12">
@@ -21,7 +20,7 @@
                 </tr>
                 <tr>
                   <th scope="col">Date</th>
-                  <td class = "match">{{ m.match_date }}</td>
+                  <td class = "match">{{ date1(m.match_date) }}</td>
                 </tr>
                 <tr>
                   <th scope="col">Location</th>
@@ -54,16 +53,41 @@
                         </thead>
 
                         <tbody v-for="titles in stats">
+                        <div class="deeperH" style="visibility: hidden" :id='titles.kpi_id + "home"'>
+                          <h4>Areas</h4>
+                          <table class="deep-table">
+                            <tr>
+                              <th >{{team_name}}'s third</th>
+                              <th >Middle</th>
+                              <th >{{match[0].opposition_name }}'s third</th>
+                            </tr>
+                            <tr>
+                              <td>{{ homeThird }}</td>
+                              <td>{{ middle }}</td>
+                              <td>{{oppThird }}</td>
+                            </tr>
+                          </table>
+                        </div>
                         <tr>
-                          <td class = "homeST">{{ titles.home }}</td>
+                          <td class = "homeST" v-on:click="showDirectionH(titles.kpi_id)" @mouseleave="hideDirectionH(titles.kpi_id + 'home')">{{ titles.home }}</td>
                           <th scope="col" :id=titles.kpi_id colspan="2">{{ titles.title}}</th>
-                          <td class = "awayST" >{{ titles.away }}</td>
+                          <td class = "awayST" v-on:click="showDirectionA(titles.kpi_id)" @mouseleave="hideDirectionA(titles.kpi_id + 'away')" >{{ titles.away }}</td>
                         </tr>
-                        <!--<tr :id="titles.kpi_id" display="none">-->
-                          <!--<td class = "homeST">{{ titles.home }}</td>-->
-                          <!--<th scope="col" :id=titles.kpi_id colspan="2">{{ titles.title}}</th>-->
-                          <!--<td class = "awayST" >{{ titles.away }}</td>-->
-                        <!--</tr>-->
+                        <div class="deeperA" style="visibility: hidden" :id='titles.kpi_id + "away"'>
+                          <h4>Areas</h4>
+                          <table class="deep-table">
+                            <tr>
+                              <th >{{team_name}}'s third</th>
+                              <th >Middle</th>
+                              <th >{{match[0].opposition_name }}'s third</th>
+                            </tr>
+                            <tr>
+                              <td>{{ homeThird }}</td>
+                              <td>{{ middle }}</td>
+                              <td>{{oppThird }}</td>
+                            </tr>
+                          </table>
+                        </div>
                         <br>
                         </tbody>
                       </table>
@@ -73,6 +97,7 @@
 
                 <v-tab title="Player Statistics" @click.prevent="playerStats">
                   <div class="container-stats" >
+                    <br>
                     <div class = "stats">
                       <table class="players-table">
                         <tbody v-for="titles in playerKPITitles">
@@ -151,6 +176,7 @@
   import {VueTabs, VTab} from 'vue-nav-tabs'
   import 'vue-nav-tabs/themes/vue-tabs.css'
   import swal from 'sweetalert'
+  import moment from 'moment'
 
   export default {
     props: ['role', 'user', 'userID','selectedMatch','teamID', 'players', 'KPI_list' ,'teamExist','location','matchesDue', 'matchesComplete', 'team_name', 'team_type', 'awayTeams'],
@@ -178,20 +204,28 @@
         awayPlayerStats: [],
         divStats:[],
         playerKPITitles:[],
+        homeThird: '',
+        middle: '',
+        oppThird: '',
+        show: true
       }
     },
     mounted() {
       this.getMatch()
 
-      // this.getMatch()
-      // swal("Loading Match Statistics!", {
-      //   icon: "success",
-      //   timer: 2000,
-      //   button: false,
-      // })
-      // this.playerStats()
+
+            swal("Loading Match Statistics!", {
+              icon: "success",
+              timer: 2000,
+              button: false,
+            })
+
+      this.playerStats()
     },
     methods: {
+      date1(date2) {
+        return moment(String(date2)).format('DD-MMM-YYYY')
+      },
       calculateStats() {
         var i
         for (i = 0; i < this.collected.length; i++) {
@@ -339,7 +373,6 @@
         });
       },
       getTitles() {
-        console.log('getTitles')
         var n
         var dupeArray = []
         var uniqueArray = []
@@ -466,12 +499,14 @@
           return 1;
         return 0;
       },
-
+      compare2(a, b) {
+        if (a.kpi_id< b.kpi_id)
+          return -1;
+        if (a.kpi_id > b.kpi_id)
+          return 1;
+        return 0;
+      },
       assignTitles() {
-
-        console.log('Assign')
-        console.log(this.kpiTitles)
-
         this.collected.sort(this.compare);
 
         var x
@@ -524,7 +559,6 @@
             }
             if (this.collected[x].kpi_id == 5 || this.collected[x].kpi_id == 7 || this.collected[x].kpi_id == 9 || this.collected[x].kpi_id == 10) {
               goalAttempts++
-              console.log(this.collected[x])
             }
           }
         }
@@ -536,13 +570,12 @@
             }
             if (this.collected[x].kpi_id == 5 || this.collected[x].kpi_id == 7) {
               goals++
-              console.log(this.collected[x])
             }
           }
         }
 
-        this.PointRatios = pointAttempts / points
-        this.GoalRatios = goalAttempts / goals
+        this.PointRatios = (pointAttempts / points).toFixed(2);
+        this.GoalRatios = (goalAttempts / goals).toFixed(2);
       },
       playerStats() {
 
@@ -552,9 +585,11 @@
         for (var i = 0; i < this.collected.length; i++) {
           if (this.collected[i].player_id != '' && this.collected[i].team_id == this.teamID) {
             var homeStat = {
+              "collected_id": this.collected[i].collected_id,
               "player_id": this.collected[i].player_id,
               "player_name": '',
               "kpi_title": this.collected[i].title,
+              "kpi_id": this.collected[i].id,
               "team_id": this.collected[i].team_id,
               "quantity": 0
             }
@@ -562,6 +597,7 @@
           }
           if (this.collected[i].player_number != '' && this.collected[i].team_id == this.match[0].teamAway_id) {
             var awayStat = {
+              "collected_id": this.collected[i].collected_id,
               "player_number": this.collected[i].player_number,
               "kpi_title": this.collected[i].title,
               "team_id": this.collected[i].team_id,
@@ -574,20 +610,19 @@
         for (var x = 0; x < homePlayers.length; x++) {
           for (i = 0; i < this.players.length; i++) {
             if (homePlayers[x].player_id == this.players[i].playerID) {
-              console.log('oioi')
               homePlayers[x].player_name = this.players[i].firstName + ' ' + this.players[i].lastName
             }
           }
         }
-
-        console.log(homePlayers)
         // console.log(awayPlayers)
         this.loopHomePlayers(homePlayers)
         this.loopAwayPlayers(awayPlayers)
       },
-      loopHomePlayers(homeKPI) {
+      loopHomePlayers(list) {
         var i
         var x
+
+        var homeKPI = list
         for (x = 0; x < this.collected.length; x++) {
           for (i = 0; i < homeKPI.length; i++) {
             if (this.collected[x].title == homeKPI[i].kpi_title && this.collected[x].team_id == homeKPI[i].team_id && this.collected[x].player_id == homeKPI[i].player_id) {
@@ -596,21 +631,23 @@
           }
         }
 
-        var uniqueArrayZ = this.removeDuplicates(homeKPI, "player_id");
+        // var uniqueArrayZ = this.removeDuplicates(homeKPI, "collected_id");
 
-        this.homePlayerStats = uniqueArrayZ
-        console.log(this.homePlayerStats)
+        this.homePlayerStats = homeKPI
 
         var uniqueArrayY = this.removeDuplicates(this.collected, "title");
         this.playerKPITitles = uniqueArrayY
-        console.log(this.playerKPITitles)
 
-        // for (var x = 0; x < this.homePlayerStats.length; x++) {
-        //   for (var n = 0; n < this.homePlayerStats.length; n++) {
-        //     if (this.homePlayerStats[x] == 1) {
-        //     }
-        //   }
-        // }
+        for (var n = 0; n < this.homePlayerStats.length; n++) {
+          for (var m = 0; m < this.homePlayerStats.length; m++) {
+            if (this.homePlayerStats[n].player_name == this.homePlayerStats[m].player_name && this.homePlayerStats[n].kpi_title == this.homePlayerStats[m].kpi_title) {
+              this.homePlayerStats.splice(m, 1);
+              // this.homePlayerStats[]
+            }
+          }
+        }
+
+        this.homePlayerStats.sort(this.compare2);
 
         // console.log(this.homePlayerStats)
       },
@@ -635,7 +672,7 @@
         //   }
         // }
 
-        var uniqueArrayZ = this.removeDuplicates(awayKPI, "player_number");
+        var uniqueArrayZ = this.removeDuplicates(awayKPI, "collected_id");
 
         this.awayPlayerStats = uniqueArrayZ
 
@@ -660,7 +697,69 @@
         }
 
         return results
-      }
+      },
+      showDirectionH(id){
+        var ownThird = 0
+        var middle = 0
+        var oppThird = 0
+
+        var id2 = id + 'home'
+        for (var x = 0; x < this.collected.length; x++) {
+          if (this.collected[x].kpi_id == id && this.collected[x].team_id == this.teamID){
+            if (this.collected[x].collected_pitch_location == 'Own Third'){
+              ownThird++
+            }
+            else if (this.collected[x].collected_pitch_location == 'Middle'){
+              middle++
+            }
+            else if (this.collected[x].collected_pitch_location == 'Opposition Third'){
+              oppThird++
+            }
+          }
+        }
+
+        this.homeThird = ownThird
+        this.middle = middle
+        this.oppThird = oppThird
+
+
+        var element = document.getElementById(id2);
+        document.getElementById(id2).style.visibility = "visible";
+      },
+      hideDirectionH(id){
+        document.getElementById(id).style.visibility = "hidden";
+      },
+      showDirectionA(id){
+        var ownThird = 0
+        var middle = 0
+        var oppThird = 0
+
+        var id2 = id + 'away'
+        for (var x = 0; x < this.collected.length; x++) {
+          if (this.collected[x].kpi_id == id && this.collected[x].team_id == this.match[0].teamAway_id){
+            if (this.collected[x].collected_pitch_location == 'Own Third'){
+              ownThird++
+            }
+            else if (this.collected[x].collected_pitch_location == 'Middle'){
+              middle++
+            }
+            else if (this.collected[x].collected_pitch_location == 'Opposition Third'){
+              oppThird++
+            }
+          }
+        }
+
+        this.homeThird = ownThird
+        this.middle = middle
+        this.oppThird = oppThird
+
+
+        var element = document.getElementById(id2);
+        document.getElementById(id2).style.visibility = "visible";
+      },
+      hideDirectionA(id){
+        document.getElementById(id).style.visibility = "hidden";
+      },
     }
   }
 </script>
@@ -756,6 +855,36 @@
   .swal {
     background-color: rgba(63,255,106,0.69);
     border: 3px solid white;
+  }
+
+  .deeperH {
+    height: 13%;
+    width: 29%;
+    position: absolute;
+    margin-left: 140px;
+    color: black;
+    background-color: #F0F8FF;
+    border-style: double;
+    border-color: #00FFFF;
+  }
+
+  .deeperA {
+    height: 13%;
+    width: 29%;
+    position: absolute;
+    margin-left: 310px;
+    color: black;
+    background-color: #F0F8FF;
+    border-style: double;
+    border-color: #00FFFF;
+  }
+
+  .deeperH th , .deeperA th{
+    background-color: #17252A;
+  }
+
+  .deep-table {
+    font-size: .7em;
   }
 
 </style>

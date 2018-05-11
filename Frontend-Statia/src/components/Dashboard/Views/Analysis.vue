@@ -3,10 +3,9 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-12">
-          {{ kpiData }} {{ specificStats }}
           <card>
             <template slot="header">
-              <h4 class="card-title">ANALYSIS COMPONENT</h4>
+              <h4 class="card-title">KPI Analysis</h4>
             </template>
             <select class="form-control"  v-model="kpiData" @change="getStats">
               <option id="null"></option>
@@ -14,23 +13,34 @@
               <option value="goalsR" >Goals Conversion Rate</option>
               <option v-for="row in KPITitles" :value="row.kpi_id" >{{ row.title }}</option>
             </select>
-            <div class="checkBox">
-              <h2>Matches</h2>
-              <label class="container" v-for="m in matchesComplete"> {{ m.opposition_name}} - <br> {{ date1(m.match_date) }}
-                <input type="checkbox" checked="checked" v-model="checkedMatches" :value='m.match_id' @change="assignMatches">
-                <span class="checkmark"></span>
-              </label>
-            </div>
+            <br>
             <div class="Chart">
-              <h2>Linechart</h2>
+              <h2>Matches</h2>
               <canvas ref="canvas" id="chart" width="100%" height="50%"></canvas>
             </div>
+
+            <br>
+            <table class="table">
+              <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Opposition</th>
+                <th scope="col">Date</th>
+                <th scope="col">Competition</th>
+
+              </tr>
+              </thead>
+              <tbody>
+              <tr v-for="matches in matchesComplete">
+                <td class="match"><input type="checkbox" checked="checked" v-model="checkedMatches" :value='matches.match_id' @change="assignMatches"></td>
+                <td class = "match">{{ matches.opposition_name }}</td>
+                <td class = "match">{{ date1(matches.match_date) }}</td>
+                <td class = "match">{{ matches.match_competition }}</td>
+              </tr>
+              </tbody>
+            </table>
           </card>
         </div>
-
-        {{ checkedMatches}} : {{ labels}}
-        <br>
-        {{ specValues}} : {{ specificStats}}
 
       </div>
     </div>
@@ -55,6 +65,7 @@
       return {
         kpiData: '',
         labels: [],
+        labels2:[],
         checkedMatches: [],
         matchesTitle:[],
         checkedData:[],
@@ -115,7 +126,7 @@
         var myChart = new Chart(ctx, {
           type: 'line',
           data: {
-            labels: this.labels,
+            labels: this.labels2,
             datasets: [{
               label: this.specificStats[0].title,
               data: this.specValues,
@@ -152,8 +163,14 @@
       },
       assignMatches() {
         this.labels = []
+        this.labels2 = []
         for (var i = 0; i < this.checkedMatches.length; i++) {
-          this.labels.push(this.checkedMatches[i])
+          var obj = {
+            "id": this.checkedMatches[i],
+            "opposition": '',
+            "date": ''
+          }
+          this.labels.push(obj)
         }
         this.getStats()
       },
@@ -364,12 +381,24 @@
       assignTeamNames() {
         for (var x = 0; x < this.labels.length; x++) {
           for (var n = 0; n < this.matchesComplete.length; n++) {
-            if (this.labels[x] == this.matchesComplete[n].match_id) {
-              console.log('assignTeamNames')
-              this.labels[x] = 'vs ' + this.matchesComplete[n].opposition_name + ': ' + this.date1(this.matchesComplete[n].match_date)
+            if (this.labels[x].id == this.matchesComplete[n].match_id) {
+              this.labels[x].opposition = this.matchesComplete[n].opposition_name
+              this.labels[x].date= this.date1(this.matchesComplete[n].match_date)
             }
           }
         }
+
+        this.labels.sort(function(a,b){
+          var c = new Date(a.date);
+          var d = new Date(b.date);
+          return c-d;
+        });
+
+        for (var x = 0; x < this.labels.length; x++) {
+          this.labels2[x] =this.labels[x].opposition + ':' + this.labels[x].date
+        }
+        console.log('hi')
+        console.log(this.labels)
         this.render()
       },
       getRatios () {
@@ -411,8 +440,9 @@
     border-radius: 15px;
     box-shadow: 0px 2px 15px rgba(25, 25, 25, 0.27);
     margin:  25px 0;
-    width: 75%;
-    float:left;
+    width: 90%;
+    height: 90%;
+    margin:auto;
   }
 
   .Chart h2 {
@@ -491,6 +521,27 @@
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
+  }
+
+  h4 {
+    margin:auto;
+  }
+
+  select {
+    font-size: 1em;
+    width: 30%;
+    margin: auto;
+    text-align: center;
+  }
+
+  thead {
+    background-color: #17252A;
+    color: #40a0e0;
+  }
+
+  table {
+    width: 80%;
+    margin: auto;
   }
 
 </style>
