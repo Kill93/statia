@@ -17,6 +17,8 @@ import ViewMatch from 'src/components/Dashboard/Views/ViewMatch.vue'
 import EditMatch from 'src/components/Dashboard/Views/EditMatch.vue'
 import PreEvent from 'src/components/Dashboard/Views/PreEvent.vue'
 import MatchEvent from 'src/components/Dashboard/Views/MatchEvent.vue'
+import Account from 'src/components/Dashboard/Views/Account.vue'
+
 
 const routes = [
   {
@@ -88,6 +90,11 @@ const routes = [
         path: 'matches/createMatch',
         name: 'CreateMatch',
         component: CreateMatch
+      },
+      {
+        path: 'account',
+        name: 'Account',
+        component: Account
       },
       {
         path: 'matches/editMatch',

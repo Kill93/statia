@@ -28,9 +28,9 @@ body > .navbar-collapse{
         z-index: 4;
 
         p{
-            float: left;
-            font-size: 20px;
-            margin: 10px 10px;
+            float: right;
+            font-size: 3em;
+            margin: 20px 30px;
             color: white;
             line-height: 20px;
             font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -44,17 +44,19 @@ body > .navbar-collapse{
             line-height: 210%;
 
             .logo-img{
-                width: 40px;
+                width: 60px;
                 display: inline-block;
-                height: 40px;
+                height: 60px;
                 margin-left: 0px;
-                margin-right: 10px;
                 background: white;
                 border-radius: 40px;
                 text-align: center;
+                margin-right: -20px;
 
               img{
-                  max-width: 21px;
+                  height: 50px;
+                  width: 50px;
+                border-radius: 40px;
               }
             }
         }

@@ -1,6 +1,5 @@
 <template>
   <div class="matchevent">
-{{ kpis.length }}
     <sweet-modal ref = 'mod' overlay-theme = "dark">
       <table class="table">
         <tbody>
@@ -48,18 +47,61 @@
       </table>
     </sweet-modal>
 
+    <sweet-modal ref = 'editk' overlay-theme = "dark">
+      <table class="table">
+        <tbody>
+        <tr>
+          <th scope="col">Team</th>
+          <td class = "form">
+            <select v-model="DteamID" class="form-control">
+              <option :value="teamID"> {{ team_name}} </option>
+              <option :value="match[0].teamAway_id"> {{ opposition }} </option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th scope="col">Action</th>
+          <td class = "match">
+            <select v-model="Dkpi_title" class="form-control">
+              <option v-for="item in kpis"> {{ item.kpi_title }} </option>
+            </select>
+          </td>
+        </tr>
+        <tr v-if="DteamID == teamID">
+          <th scope="col">Player</th>
+          <td class = "match">
+            <select v-model="Dplayer" class="form-control">
+              <option v-for="item in squadmembers"> {{ item.player_name }} </option>
+            </select>
+          </td>
+        </tr>
+        <tr v-if="DteamID == match[0].teamAway_id" >
+          <th scope="col">Player Number</th>
+          <td class = "match">
+            <select v-model="Dplayer_number" class="form-control">
+              <option v-for="index in 35"> {{ index }} </option>
+            </select></td>
+        </tr>
+        <tr>
+          <th scope="col">Pitch Region</th>
+          <td class = "match">
+            <select v-model="locationCollected" class="form-control" >
+              <option id="null"></option>
+              <option  value="Opposition Third" >{{ items[0].region }}</option>
+              <option  value="Middle" >{{ items[1].region }}</option>
+              <option  value="Own Third" >{{ items[2].region }}</option>
+            </select>
+          </td>
+        </tr>
+        </tbody>
+        <button type="button" @click="removeKPI" class="btn btn-danger btn-lg">Remove KPI</button>
+        <button type="button" @click="editKPI" class="btn btn-success btn-lg">Save!</button>
+      </table>
+    </sweet-modal>
+
     <sweet-modal ref = 'subs' id = "subbs" overlay-theme = "dark">
       <h3> Make a Substitution</h3>
 
-      <!--<h2> Substitutes</h2>-->
-      <!--<ul class="nav">-->
-      <!--<li v-for="positions in squadmembers" v-if="positions.position == 'SUB'" v-on:click.prevent='makeSub(positions.player_name, positions.player_id, positions.position)'>-->
-      <!--<div class="circleS" :id=positions.position>-->
-      <!--{{ positions.squad_number }}-->
-      <!--<i>{{ positions.player_name }}</i>-->
-      <!--</div>-->
-      <!--</li>-->
-      <!--</ul>-->
 
       <table class="table">
         <tbody>
@@ -161,17 +203,19 @@
                     <thead class="thead-dark">
                     <tr>
                     <th scope="col">Minute</th>
-                    <th scope="col">
-                    </th>
+                    <th scope="col"></th>
+                      <th scope="col"></th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="line in kpiListCollected">
-                    <td class = "eventsTime">{{ line.time }}'</td>
+                    {{ kpiListCollected}}
+                    <tr v-for="(line, index) in kpiListCollected">
+                    <td class = "eventsTime">{{ line.time }}' </td>
                       <td class = "eventsDescr" v-if="line.player!=''">{{ line.kpi_title }} for {{ team_name }} by {{ line.player }}</td>
                       <td class = "eventsDescr" v-if="line.player=='' && line.player_number !=''">{{ line.kpi_title }} for {{ opposition }} by number {{ line.player_number }}</td>
                       <td class = "eventsDescr" v-if="line.player=='' && line.player_number =='' && line.team_id == teamID">{{ line.kpi_title }} for {{ team_name }}</td>
                       <td class = "eventsDescr" v-if="line.player=='' && line.player_number =='' && line.team_id !=teamID">{{ line.kpi_title }} for {{ opposition }}</td>
+                      <td @click="editKPIWindow(line, index)"><i class="glyphicon glyphicon-edit"></i></td>
                     </tr>
                     </tbody>
                     </table>
@@ -302,7 +346,14 @@
         stats: [],
         homePlayerStats: [],
         awayPlayerStats: [],
-        divStats:[]
+        divStats:[],
+        Dkpi_title: '',
+        Dtime: '',
+        Dplayer: '',
+        Dplayer_number:'',
+        Dpitch_location:'',
+        DteamID: '',
+        Dindex: ''
       }
     },
     mounted: function() {
@@ -887,6 +938,73 @@
       },
       subs(){
         this.$refs.subs.open()
+      },
+      editKPIWindow(line, index){
+        this.Dindex = index
+        this.Dkpi_title = line.kpi_title
+        this.Dtime = line.time
+        this.Dpitch_location = line.pitchLocation
+        this.DteamID=line.team_id
+
+        if (line.team_id= this.teamID){
+          this.Dplayer_number = ''
+          this.Dplayer=line.player
+        }
+
+        else if (line.team_id= this.match[0].teamAway_id){
+          this.Dplayer_number = line.player_number
+          this.Dplayer=''
+        }
+
+        this.$refs.editk.open()
+      },
+      editKPI(){
+
+        this.kpiListCollected[this.Dindex].kpi_title=this.Dkpi_title
+        this.kpiCollectedID=this.Dkpi_title
+        this.kpiListCollected[this.Dindex].time=this.Dtime
+        this.kpiListCollected[this.Dindex].pitchLocation=this.Dpitch_location
+        this.kpiListCollected[this.Dindex].team_id=this.DteamID
+        this.kpiListCollected[this.Dindex].player=this.Dplayer
+        this.kpiListCollected[this.Dindex].player_number=this.Dplayer_number
+
+        for (var x = 0; x < this.kpis.length; x++ ) {
+          if(this.kpis[x].kpi_title == this.Dkpi_title){
+            this.kpiListCollected[this.Dindex].kpi_id = this.kpis[x].kpi_id
+          }
+        }
+
+        for (var x = 0; x < this.squadmembers.length; x++ ) {
+          if(this.squadmembers[x].player_name == this.Dplayer){
+            this.kpiListCollected[this.Dindex].player_id = this.squadmembers[x].player_id
+          }
+        }
+
+        this.Dindex = ''
+        this.Dkpi_title = ''
+        this.Dtime = ''
+        this.Dpitch_location = ''
+        this.DteamID = ''
+
+        this.calculateScore()
+        this.kpiCollectedID=''
+
+        this.$refs.editk.close()
+      },
+      removeKPI(){
+        swal({
+          title: "Are you sure you want to delete this collected item?",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+        })
+          .then((willDelete) => {
+            if (willDelete) {
+              this.kpiListCollected.splice(this.Dindex, 1)
+              this.calculateStats()
+              this.$refs.editk.close()
+            }
+          })
       }
     }
   }
@@ -1211,21 +1329,28 @@
 
     #matchScreen {
       width: 100%;
-      height: 100%;
+      height: 80vh;
       margin: auto;
       display: flex;
       flex-direction: row;
     }
 
     #left {
-      /*float: right;*/
-      width: 25%;
+      float: left;
+      width: 21%;
+      height: 100%;
+      background: linear-gradient(-60deg, #E0E0E0 53%, #D3D3D3 53%);
+      overflow: hidden;
+      border-right: 5px solid black;
     }
 
     #right {
-      /*float: left;*/
-      width: 25%;
+      float: right;
+      width: 21%;
+      height: 100%;
+      background: linear-gradient(-60deg, #E0E0E0 53%, #D3D3D3 53%);
       /*margin-left: 50px;*/
+      border-left: 5px solid black;
     }
 
     #pitchSVG {
@@ -1277,123 +1402,126 @@
     #middle {
       /*background-color: blue;*/
       height: 680px;
-      width: 50%;
+      width: 58%;
       /*margin:auto;*/
     }
 
     #pitch ul {
       list-style-type: none;
       width: 100%;
-      /*padding-right: 5px;*/
-      /*padding-left: 10px;*/
+      padding-right: 5px;
+      padding-left: 10px;
+      padding-top: 20px;
       height: 100%;
+      vertical-align: middle;
     }
 
     #pitch li {
-      width:200px;
       margin: auto;
       text-align: center;
-      font-size: 1.3em;
-      overflow: hidden;
+      font-size: 1.1em;
+      overflow: SCROLL;
       height: 10%;
+      color: #303C6C;
       list-style: none;
       border-radius: 5px;
-      line-height: 110%;
+      line-height: 90%;
       font-weight: bold;
-      background-color: #F0E68C;
-      border-color: black;
+      background-color: #fbe8a6;
+      border-color: #f4976c;
       border-style: solid;
       border-width: thin;
       margin-bottom: 10px;
+      padding-top: 10px;
     }
 
     #GK {
       margin-top: -120px;
-      margin-left: 22%;
+      margin-left: 26%;
       position: absolute;
     }
 
     #LCB {
       margin-top: -190px;
-      margin-left: 10.5%;
+      margin-left: 14.5%;
       position: absolute;
     }
 
     #FB {
       margin-top: -190px;
-      margin-left: 22%;
+      margin-left: 26%;
       position: absolute;
     }
 
     #RCB {
       margin-top: -190px;
-      margin-left: 33%;
+      margin-left: 37%;
       position: absolute;
     }
 
     #LWB {
       margin-top: -255px;
-      margin-left: 10.5%;
+      margin-left: 14.5%;
       position: absolute;
     }
 
     #CB {
       margin-top: -255px;
-      margin-left: 22%;
+      margin-left: 26%;
       position: absolute;
     }
 
     #RWB {
       margin-top: -255px;
-      margin-left: 33%;
+      margin-left: 37%;
       position: absolute;
     }
 
     #M1 {
       margin-top: -325px;
-      margin-left: 16%;
+      margin-left: 20%;
       position: absolute;
     }
 
     #M2 {
       margin-top: -325px;
-      margin-left: 29%;
+      margin-left: 33%;
       position: absolute;
     }
 
     #LWF {
       margin-top: -390px;
-      margin-left: 10.5%;
+      margin-left: 14.5%;
       position: absolute;
     }
 
     #CF {
       margin-top: -390px;
-      margin-left: 22%;
+      margin-left: 26%;
       position: absolute;
     }
 
     #RWF {
       margin-top: -390px;
-      margin-left: 33%;
+      margin-left: 37%;
       position: absolute;
     }
 
     #LCF {
       margin-top: -470px;
-      margin-left: 10.5%;
+      margin-left: 14.5%;
       position: absolute;
     }
 
     #FF {
       margin-top: -470px;
-      margin-left: 22%;
+      margin-left: 26%;
       position: absolute;
     }
 
     #RCF {
       margin-top: -470px;
-      margin-left: 33%;
+      margin-left: 37%;
       position: absolute;
     }
 
@@ -1424,16 +1552,20 @@
       line-height: 100%;
     }
 
+    .parent1 {
+      height: 10vh;
+    }
+
     .parent1 ul.nav {
       display: flex;
       flex-direction: row;
       align-items: stretch;
-      height: 6em;
+      height: 100%;
       bottom: 0;
       width: 100%;
       text-align: center;
       background-color: white;
-      margin-bottom:-80px;
+      //margin-bottom:-80px;
       background: linear-gradient(-60deg, #46404f 53%, #4B4452 53%);
       box-shadow: 2px 3px 5px 0px rgba(0,0,0,0.25);
       font-family: Oxygen, sans-serif;
@@ -1453,15 +1585,18 @@
       border: 0px;
     }
 
+    .parent2 {
+      height: 10vh;
+    }
+
     .parent2 ul.nav {
       display: flex;
       flex-direction: row;
       align-items: stretch;
-      height: 5em;
+      height: 100%;
       bottom: 0;
       width: 100%;
       text-align: center;
-      margin-top: -75px;
       background: linear-gradient(-60deg, #46404f 53%, #4B4452 53%);
     }
 
@@ -1480,11 +1615,9 @@
     #pitch {
       margin: auto;
       width: 100%;
-      height: 100vh;
+      height: 80vh;
       /*display: flex;*/
       /*flex-direction: row;*/
-      padding-top: 100px;
-      padding-bottom: 100px;
     }
   }
 

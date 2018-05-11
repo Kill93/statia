@@ -6,7 +6,7 @@
             <div class="logo-img">
                 <img src="static/img/statiaTHUMB.png" alt="">
             </div>
-          {{title}}
+          <p> Statia</p>
         </a>
       </div>
 

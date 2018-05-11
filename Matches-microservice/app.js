@@ -904,6 +904,147 @@ app.post('/getAllTitles', function(req, res, next) {
     })
 });
 
+app.post('/getPMatches', function(req, res, next) {
+
+    var allowedOrigins = ['http://statia.cfapps.io', 'http://localhost:8000'];
+    var origin = req.headers.origin;
+    if(allowedOrigins.indexOf(origin) > -1){
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    //res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:8020');
+    res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Access-Control-Allow-Credentials', true);
+
+    var body = '';
+    req.on('data', function (data) {
+        body += data;
+    });
+
+    req.on('end', function () {
+
+        "use strict";
+        var obj = JSON.parse(body);
+
+        let sql = "SELECT player_id FROM players WHERE user_id='"+obj.user_id +"'";
+
+        pool.getConnection(function(err, connection) {
+            console.log("connection started")
+
+            connection.query(sql ,(err, rows) => {
+                if (err) {
+                    throw err;
+                }
+                console.log(rows)
+                var player_id = ''
+                player_id = rows[0].player_id
+
+                let sql2 = "SELECT * FROM collected_kpi WHERE player_id='"+player_id +"'";
+
+                connection.query(sql2 + ' ORDER BY matchEvent_id' ,(err, rows) => {
+                    if (err) {
+                        throw err;
+                    }
+
+                    if (rows!=null && rows.length>0) {
+
+                        var matches = []
+                        var i
+                        for (i = 0; i < rows.length; i++) {
+                            var obj = {
+                                status: "success",
+                                player_id: rows[i].player_id,
+                                matchEvent_id: rows[i].matchEvent_id,
+                            }
+                            matches.push(obj)
+                        }
+                        res.send(matches);
+                    }
+                    else{
+                        var obj1 = {
+                            status: "none"
+                        }
+                        res.send(obj1);
+
+                    }
+                });
+
+            });
+
+            connection.release();
+            console.log("connection ended")
+        })
+    })
+});
+
+app.post('/getPCollected', function(req, res, next) {
+
+    var allowedOrigins = ['http://statia.cfapps.io', 'http://localhost:8000'];
+    var origin = req.headers.origin;
+    if(allowedOrigins.indexOf(origin) > -1){
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    //res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:8020');
+    res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Access-Control-Allow-Credentials', true);
+
+    var body = '';
+    req.on('data', function (data) {
+        body += data;
+    });
+
+    req.on('end', function () {
+        "use strict";
+        var obj = JSON.parse(body);
+        console.log(obj)
+
+        let sql = "SELECT * FROM collected_kpi WHERE matchEvent_id='"+obj.match_id + "' AND player_id='" + obj.player_id + "'";
+
+        pool.getConnection(function(err, connection) {
+            console.log("connection started")
+
+            connection.query(sql + 'ORDER BY kpi_id' , (err, rows) => {
+                if (err) {
+                    throw err;
+                }
+
+                if (rows!=null && rows.length>0) {
+
+                    var collected = []
+                    var i
+                    for (i = 0; i < rows.length; i++) {
+                        var obj = {
+                            status: "success",
+                            collected_id: rows[i].collected_id,
+                            matchEvent_id: rows[i].matchEvent_id,
+                            kpi_id: rows[i].kpi_id,
+                            collected_pitch_location: rows[i].collected_pitch_location,
+                            collected_time: rows[i].collected_time,
+                            team_id: rows[i].team_id,
+                            player_number: rows[i].player_number,
+                            player_id: rows[i].player_id,
+                        }
+                        collected.push(obj)
+                    }
+                    console.log(collected)
+                    res.send(collected);
+                }
+                else{
+                    var obj1 = {
+                        status: "none"
+                    }
+                    res.send(obj1);
+                    console.log(obj1)
+
+                }
+            });
+            connection.release();
+            console.log("connection endedddd")
+        })
+    })
+});
+
 
 
 app.listen(port);

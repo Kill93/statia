@@ -179,6 +179,15 @@
     text-align: center;
   }
 
+  .table {
+    width: 100%;
+  }
+
+  thead {
+    background-color: #17252A;
+    color: #40a0e0;
+  }
+
 
 
 </style>

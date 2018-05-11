@@ -4,6 +4,6 @@
     <option name="languageLevel" value="ES6" />
   </component>
   <component name="ProjectPlainTextFileTypeManager">
-    <file url="file://$PROJECT_DIR$/Statia-Frontend/src/assets/sass/lbd/_checkbox-radio-switch.scss" />
+    <file url="file://$PROJECT_DIR$/Frontend-Statia/src/components/Dashboard/Views/DashboardP.vue" />
   </component>
 </project>

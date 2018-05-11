@@ -1,8 +1,6 @@
 <template>
   <div class="viewMatch">
 
-    <i v-show="loading" class="fa fa-spinner fa-spin"></i>
-
     <div class="container-fluid">
       <div class="row">
         <div class="col-12">
@@ -32,9 +30,32 @@
                 </tr>
                 </tbody>
               </table>
-              <button class="btn btn-warning" @click.prevent="playerStats">Edit Match Details<i class="glyphicon glyphicon-edit"></i></button>
+
+              <button class="btn btn-warning" v-if="role == 'Coach'" @click.prevent="relocate_editMatch">Edit Match Details<i class="glyphicon glyphicon-edit"></i></button>
             </template>
-              <vue-tabs>
+
+            <div class = "stats" v-if="role == 'Player'" >
+              <table class="stats-table">
+                <tbody v-for="titles in stats">
+                <div class="playerAccount">
+                  <table class="stats-tableP">
+                    <tr>
+                      <th >{{ titles.title }}</th>
+                    </tr>
+                    <tr>
+                      <td>{{ titles.quantity }}</td>
+                    </tr>
+                  </table>
+                </div>
+                <br>
+                </tbody>
+              </table>
+            </div>
+
+
+
+
+            <vue-tabs v-if="role == 'Coach'" >
                 <v-tab title="Statistics" v-if="match[0].match_status == 'complete'">
                   <div class="container-stats" >
                     <div class = "stats">
@@ -179,7 +200,7 @@
   import moment from 'moment'
 
   export default {
-    props: ['role', 'user', 'userID','selectedMatch','teamID', 'players', 'KPI_list' ,'teamExist','location','matchesDue', 'matchesComplete', 'team_name', 'team_type', 'awayTeams'],
+    props: ['playerAccountID','role', 'user', 'userID','selectedMatch','teamID', 'players', 'KPI_list' ,'teamExist','location','matchesDue', 'matchesComplete', 'team_name', 'team_type', 'awayTeams'],
     components: {
       Card,
       VueTabs,
@@ -212,17 +233,19 @@
     },
     mounted() {
       this.getMatch()
-
-
             swal("Loading Match Statistics!", {
               icon: "success",
               timer: 2000,
               button: false,
             })
-
-      this.playerStats()
+      if (this.role == 'Coach'){
+        this.playerStats()
+      }
     },
     methods: {
+      sayHi(){
+        console.log('scope worked')
+      },
       date1(date2) {
         return moment(String(date2)).format('DD-MMM-YYYY')
       },
@@ -293,7 +316,14 @@
               this.match = resultsComplete
             }
           }
-          this.getCollected()
+
+          if (this.role == 'Coach') {
+            this.getCollected()
+          }
+          else if (this.role == 'Player') {
+            this.getPCollected()
+          }
+
         }).catch(error => {
           console.log(error);
         });
@@ -535,6 +565,13 @@
         }
 
       },
+      assignTitles2(){
+        for (i = 0; i < this.kpiTitles.length; i++) {
+          if (this.collected[x].kpi_id == this.kpiTitles[i].kpi_id) {
+            this.collected[x].title = this.kpiTitles[i].kpi_title
+          }
+        }
+      },
       sleep(milliseconds) {
         var start = new Date().getTime();
         for (var i = 0; i < 1e7; i++) {
@@ -760,6 +797,63 @@
       hideDirectionA(id){
         document.getElementById(id).style.visibility = "hidden";
       },
+      getPCollected(){
+
+        var teamUser = {
+          "match_id": this.selectedMatch,
+          "player_id": this.playerAccountID
+        }
+        console.log(this.playerAccountID)
+        axios({
+          url: 'https://matches-microservice.cfapps.io/getPCollected',
+          method: 'post',
+          contentType: 'application/json',
+          data: teamUser,
+        }).then(result => {
+
+          if (result.data.length != '0') {
+            var collectedKPI = []
+            var i
+            var x
+
+            for (i = 0; i < result.data.length; i++) {
+
+              var KPI = {
+                "kpi_id": result.data[i].kpi_id,
+                "title": '',
+                "collected_id": result.data[i].collected_id,
+                "matchEvent_id": result.data[i].matchEvent_id,
+                "collected_pitch_location": result.data[i].collected_pitch_location,
+                "collected_time": result.data[i].collected_time,
+                "team_id": result.data[i].team_id,
+                "player_number": result.data[i].player_number,
+                "player_id": result.data[i].player_id,
+                "player_name": '',
+                "team_name": '',
+                "quantity": 0
+              }
+              collectedKPI.push(KPI)
+            }
+            this.collected = collectedKPI
+            this.getTitles()
+
+            for (x = 0; x < this.collected.length; x++) {
+              for (i = 0; i < this.collected.length; i++) {
+                if (this.collected[x].kpi_id == this.collected[i].kpi_id) {
+                  this.collected[i].quantity++
+                }
+              }
+            }
+
+            var uniqueArrayZ = this.removeDuplicates(this.collected, "kpi_id");
+
+            this.stats = uniqueArrayZ
+
+          }
+        }).catch(error => {
+          console.log(error);
+        });
+      },
     }
   }
 </script>
@@ -885,6 +979,11 @@
 
   .deep-table {
     font-size: .7em;
+  }
+
+  .stats-tableP {
+    width: 40%;
+    margin: auto;
   }
 
 </style>

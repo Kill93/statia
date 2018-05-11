@@ -8,19 +8,19 @@
       </sidebar-link>
       <sidebar-link v-if="user != 'guest'" to="/admin/dashboard" >
         <i class="glyphicon glyphicon-dashboard"></i>
-        <p>Dashboard</p>
+        <p>Dashboard {{ selectedMatch }}</p>
       </sidebar-link>
-      <sidebar-link v-if="user != 'guest'" to="/admin/manage-team">
+      <sidebar-link v-if="user != 'guest' && role == 'Coach'" to="/admin/manage-team">
         <i class="glyphicon glyphicon-briefcase"></i>
         <p>Manage Team </p>
       </sidebar-link>
-      <sidebar-link v-if="user != 'guest'" to="/admin/matches">
+      <sidebar-link v-if="user != 'guest' && role == 'Coach'" to="/admin/matches">
         <i class="glyphicon glyphicon-duplicate"></i>
         <p>Matches</p>
       </sidebar-link>
-      <sidebar-link v-if="user != 'guest'" to="/admin/analysis">
+      <sidebar-link v-if="user != 'guest' && role == 'Coach'" to="/admin/analysis">
         <i class="glyphicon glyphicon-stats"></i>
-        <p>Analysis</p>
+        <p>Analysis {{playerAccountID}}</p>
       </sidebar-link>
       <sidebar-link v-if="user == 'guest'" to="/admin/login">
         <i class="glyphicon glyphicon-log-in"></i>
@@ -34,7 +34,7 @@
     <div class="main-panel">
       <top-navbar @isLoggedIn="isLoggedIn" :user="user" :role="role" :userID="userID"></top-navbar>
 
-      <dashboard-content @click="toggleSidebar" @selectMatch="selectMatch" @updateMatches="updateMatches" @getTeam="getTeam" @getKPI_list="getKPI_list" :selectedMatch="selectedMatch" :user="user" :role="role" :userID="userID" :KPI_list="KPI_list" :players="players" :teamID="teamID" :location="location" :team_name="team_name" :team_type="team_type" :matchesDue="matchesDue" :matchesReady="matchesReady" :matchesComplete="matchesComplete" :teamExist="teamExist" >
+      <dashboard-content @getMatchesP="getMatchesP" @getMatchDataP="getMatchDataP"  @click="toggleSidebar" @emitPlayerID="emitPlayerID" @selectMatch="selectMatch" @updateMatches="updateMatches" @getTeam="getTeam" @getKPI_list="getKPI_list" :selectedMatch="selectedMatch" :user="user" :role="role" :userID="userID" :KPI_list="KPI_list" :players="players" :teamID="teamID" :location="location" :team_name="team_name" :team_type="team_type" :matchesDue="matchesDue" :matchesReady="matchesReady" :matchesComplete="matchesComplete" :teamExist="teamExist" :playerAccountID="playerAccountID" :matchIDs="matchIDs" :matchesP="matchesP" >
 
       </dashboard-content>
 
@@ -75,6 +75,9 @@
         matchesComplete:[],
         matchesReady:[],
         selectedMatch: '',
+        playerAccountID: '',
+        matchIDs: [],
+        matchesP: [],
       }
     },
     computed: mapGetters([
@@ -87,6 +90,9 @@
       this.getKPI_list(),
       this.isLoggedIn(),
       this.getTeam()
+      if (this.role == 'Player'){
+        this.getMatchesP()
+      }
     },
     methods: mapActions([
       'addToken',
@@ -297,7 +303,106 @@
         if (this.$sidebar.showSidebar) {
           this.$sidebar.displaySidebar(false)
         }
-      }
+      },
+      emitPlayerID(player_id){
+        this.playerAccountID = player_id;
+      },
+      getMatchesP(){
+        var teamUser = {
+          "user_id": this.userID,
+        }
+        axios({
+          url: 'https://matches-microservice.cfapps.io/getPMatches',
+          method: 'post',
+          contentType: 'application/json',
+          data: teamUser,
+        }).then(result => {
+
+          console.log(teamUser)
+
+          if (result.data.length != '0') {
+            var i
+            var results = []
+
+            for (i = 0; i < result.data.length; i++) {
+
+              var matchesDue = {
+                "player_id": result.data[i].player_id,
+                "matchEvent_id": result.data[i].matchEvent_id,
+              }
+              results.push(matchesDue);
+            }
+
+            var uniqueArrayZ = this.removeDuplicates(results, "matchEvent_id");
+
+            this.matchIDs = uniqueArrayZ
+
+            this.emitPlayerID(this.matchIDs[0].player_id)
+
+            this.getMatchDataP()
+          }
+
+        }).catch(error => {
+          console.log(error);
+        });
+      },
+      getMatchDataP(){
+
+        var Pmatches = []
+
+        for (var x = 0; x < this.matchIDs.length; x++ ) {
+          var teamUser = {
+            "match_id": this.matchIDs[x].matchEvent_id,
+          }
+
+          axios({
+            url: 'https://matches-microservice.cfapps.io/getMatch',
+            method: 'post',
+            contentType: 'application/json',
+            data: teamUser,
+          }).then(result => {
+
+            if (result.data.length != '0') {
+              var i
+              var results = []
+
+              console.log(result.data[0].status)
+
+              if ( result.data[0].status == 'success') {
+
+                var matchesDue = {
+                  "match_id": result.data[0].match_id,
+                  "teamHome_id": result.data[0].teamHome_id,
+                  "teamAway_id": result.data[0].teamAway_id,
+                  "matchDaySquad_id": result.data[0].matchDaySquad_id,
+                  "match_competition": result.data[0].competition,
+                  "match_status": result.data[0].match_status,
+                  "match_date": result.data[0].dateMatch,
+                  "match_location": result.data[0].location,
+                  "opposition_name": result.data[0].opposition,
+                }
+                console.log(matchesDue)
+                this.matchesP.push(matchesDue)
+              }
+            }
+          }).catch(error => {
+            console.log(error);
+          });
+        }
+      },
+      removeDuplicates(originalArray, prop) {
+        var newArray = [];
+        var lookupObject  = {};
+
+        for(var i in originalArray) {
+          lookupObject[originalArray[i][prop]] = originalArray[i];
+        }
+
+        for(i in lookupObject) {
+          newArray.push(lookupObject[i]);
+        }
+        return newArray;
+      },
     }
   }
 
@@ -305,25 +410,5 @@
 
 <style scoped lang="scss">
   @import '../../../assets/styles/app.scss';
-
-  /*.main-panel {*/
-    /*width: 100%;*/
-  /*}*/
-
-  /*@media (min-width: 991px) {*/
-    /*.main-panel {*/
-      /*width: 100%;*/
-    /*}*/
-  /*}*/
-
-  /*@media (max-width: 991px) {*/
-    /*.sidebar {*/
-      /*display: none;*/
-    /*}*/
-
-    /*.main-panel {*/
-      /*width: 100%;*/
-    /*}*/
-  /*}*/
 
 </style>

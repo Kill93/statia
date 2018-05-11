@@ -171,5 +171,59 @@ app.get('/users', function(req, res, next) {
     })
 });
 
+app.post('/getUser', function(req, res, next) {
+
+    var allowedOrigins = ['http://statia.cfapps.io', 'http://localhost:8000'];
+    var origin = req.headers.origin;
+    if(allowedOrigins.indexOf(origin) > -1){
+        res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    //res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:8020');
+    res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Access-Control-Allow-Credentials', true);
+
+    var body = '';
+    req.on('data', function (data) {
+        body += data;
+    });
+
+    req.on('end', function () {
+        "use strict";
+        var obj = JSON.parse(body);
+        let sql = "Select * FROM users WHERE user_id='"+obj.user_id +"'";
+
+        pool.getConnection(function(err, connection) {
+
+            connection.query(sql ,(err, rows) => {
+                if (err) {
+                    throw err;
+                }
+
+                if (rows!=null && rows.length>0) {
+                    var obj = {
+                        status: "success",
+                        user_email: rows[0].user_email,
+                        user_firstName: rows[0].user_firstName,
+                        user_lastName: rows[0].user_lastName,
+                        user_dob: rows[0].user_dob,
+                    }
+                    res.send(obj);
+                }
+                else{
+                    var obj1 = {
+                        status: "none"
+                    }
+                    res.send(obj1);
+
+                }
+            });
+            connection.release();
+        })
+
+    })
+
+});
+
 
 app.listen(port);
