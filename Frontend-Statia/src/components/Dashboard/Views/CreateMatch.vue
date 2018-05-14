@@ -21,9 +21,7 @@
                   <div class="form-group" id = "newAway" style='display:none'>
                     <label for="teamNameA">Opposition:</label>
                     <input type="text" name="teamNameA" tabindex="1" v-model="opposition" class="form-control" value="">
-                    <label for="teamLocationA">Opposion Location:</label>
-                    <input type="text" name="teamLocationA" tabindex="2" v-model="oppLocation" class="form-control" placeholder="Location">
-                  </div>
+                    </div>
                   <div class="form-group">
                     <label for="competition">Competition:</label>
                     <input type="text" name="competition" tabindex="1" v-model="competition" class="form-control" placeholder="Competition" value="">
@@ -37,12 +35,6 @@
                     <label for="matchLocation">Match Location:</label>
                     <input type="text" name="matchLocation" tabindex="1" v-model="matchLocation" class="form-control" placeholder="Match Location" value="">
                   </div>
-                  {{ opposition }}
-                  {{ oppID }}
-                  {{ oppLocation }}
-                  {{ competition }}
-                  {{ matchDate }}
-                  {{ matchLocation }}
                   <div class="form-group">
                     <div class="row">
                       <button type="button" @click="createMatch1" class="btn btn-success btn-lg">Create Match!</button>
@@ -169,7 +161,7 @@
         var logTeam = {
           "userID": this.$store.getters['getUserID'],
           "teamName": this.opposition,
-          "location": this.oppLocation,
+          "location": '',
           "teamType": 'away',
         }
         axios({

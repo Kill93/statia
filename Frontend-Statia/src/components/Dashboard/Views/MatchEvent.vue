@@ -43,11 +43,14 @@
           </td>
         </tr>
         </tbody>
-        <button type="button" @click="collectKPI" class="btn btn-success btn-lg">Save!</button>
+        <br>
+        <button type="button" @click="collectKPI" id= "btn2" class="btn btn-success btn-lg">Save!</button>
       </table>
     </sweet-modal>
 
     <sweet-modal ref = 'editk' overlay-theme = "dark">
+      <button type="button" @click="removeKPI" id ="btn3" class="btn btn-danger btn-lg">Remove KPI</button>
+
       <table class="table">
         <tbody>
         <tr>
@@ -94,8 +97,7 @@
           </td>
         </tr>
         </tbody>
-        <button type="button" @click="removeKPI" class="btn btn-danger btn-lg">Remove KPI</button>
-        <button type="button" @click="editKPI" class="btn btn-success btn-lg">Save!</button>
+        <button type="button" @click="editKPI" id ="btn2" class="btn btn-success btn-lg">Save!</button>
       </table>
     </sweet-modal>
 
@@ -208,7 +210,6 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {{ kpiListCollected}}
                     <tr v-for="(line, index) in kpiListCollected">
                     <td class = "eventsTime">{{ line.time }}' </td>
                       <td class = "eventsDescr" v-if="line.player!=''">{{ line.kpi_title }} for {{ team_name }} by {{ line.player }}</td>
@@ -251,18 +252,6 @@
               </div>
             </div>
          </div>
-
-           <!--<h2> Substitutes</h2>-->
-           <!--<div class = "parent3" v-if="liveKPIs=='no'">-->
-               <!--<ul class="nav">-->
-                 <!--<li v-for="positions in squadmembers" v-if="positions.position == 'SUB'" v-on:click.prevent='makeSub(positions.player_name, positions.player_id, positions.position)'>-->
-                   <!--<div class="circleS" :id=positions.position>-->
-                     <!--{{ positions.squad_number }}-->
-                     <!--<i>{{ positions.player_name }}</i>-->
-                   <!--</div>-->
-                 <!--</li>-->
-               <!--</ul>-->
-           <!--</div>-->
 
            <div class="parent2">
              <ul class="nav">
@@ -1022,6 +1011,7 @@
       margin: auto;
       height: 100vh;
       width: 100vw;
+      min-height: 70vh;
     }
 
     #matchScreen {
@@ -1062,7 +1052,7 @@
       position: absolute;
       text-align: center;
       font-size: .97em;
-      font-weight: 400;
+      font-weight: bold;
       text-shadow:
         -1px -1px 0 #000,
         1px -1px 0 #000,
@@ -1095,6 +1085,7 @@
       height: 100%;
       background: linear-gradient(-60deg, #E0E0E0 53%, #D3D3D3 53%);
       /*margin-left: 50px;*/
+      overflow: hidden;
       border-left: 5px solid black;
     }
 
@@ -1348,6 +1339,7 @@
       float: right;
       width: 21%;
       height: 100%;
+      overflow: hidden;
       background: linear-gradient(-60deg, #E0E0E0 53%, #D3D3D3 53%);
       /*margin-left: 50px;*/
       border-left: 5px solid black;
@@ -1366,6 +1358,7 @@
       width: 40px;
       padding: 20px 0;
       line-height: 0;
+      font-weight: bold;
       border-radius: 50%;
       background-color: black;
       color: white;
@@ -1380,8 +1373,8 @@
       clear: both;
       position: absolute;
       text-align: center;
-      font-size: .9em;
-      font-weight: 400;
+      font-size: .99em;
+      font-weight: bold;
       text-shadow:
         -1px -1px 0 #000,
         1px -1px 0 #000,
@@ -1426,7 +1419,6 @@
       list-style: none;
       border-radius: 5px;
       line-height: 90%;
-      font-weight: bold;
       background-color: #fbe8a6;
       border-color: #f4976c;
       border-style: solid;
@@ -1920,6 +1912,15 @@
   select {
     width: 40%;
     color: yellow;
+  }
+
+  #btn2 {
+    margin-left: 90%;
+    margin-top: 10px;
+  }
+
+  #btn3 {
+    margin-bottom: 10px;
   }
 
 

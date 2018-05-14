@@ -18,13 +18,13 @@
               </thead>
               <tbody >
               <tr v-for="(row, index) in rowsBase">
-                <td class="table-success">{{ row.KPI_title }}</td>
-                <td class="table-success">{{ row.KPI_description }} </td>
+                <td class="rowsBase1">{{ row.KPI_title }}</td>
+                <td class="rowsBase2">{{ row.KPI_description }} </td>
               </tr>
 
               <tr v-for="(rowC, index) in rowsCustom">
-                <td class="bg-warning"><input type="text" :id="'title' + index" v-model="rowC.KPI_title"></td>
-                <td class="bg-warning"><input type="text"  size="50" :id="'description' + index" v-model="rowC.KPI_description">
+                <td class="rowsCustom"><input type="text" :id="'title' + index" v-model="rowC.KPI_title"></td>
+                <td class="rowsCustom"><input type="text"  size="50" :id="'description' + index" v-model="rowC.KPI_description">
                 <br>
                   <button v-on:click="removeElement(index);" type="button" class="btn btn-danger">Remove</button>
                 </td>
@@ -184,6 +184,11 @@
   button {
     margin:auto;
     text-align: center;
+  }
+
+  .rowsBase1 {
+    color: green;
+    font-weight: bold;
   }
 
 

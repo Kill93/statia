@@ -192,6 +192,7 @@
   {
     text-align: center;
     margin: auto;
+    height: 100%;
   }
 
   img{

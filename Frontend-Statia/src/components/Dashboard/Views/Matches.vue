@@ -103,6 +103,10 @@
 <style scoped lang="scss">
   @import '../../../assets/styles/app.scss';
 
+  .matches {
+    min-height: 70vh;
+  }
+
   .panel
   {
     margin: auto;

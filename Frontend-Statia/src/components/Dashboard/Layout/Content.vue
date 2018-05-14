@@ -44,7 +44,13 @@
   }
 
 </script>
-<style>
+<style scoped lang="scss">
+  @import '../../../assets/styles/app.scss';
+
+  .content {
+    min-height: 100%;
+    padding-bottom: 180px;
+  }
 
   .fade-enter-active,
   .fade-leave-active {

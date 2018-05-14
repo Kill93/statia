@@ -14,7 +14,7 @@
         <span class="navbar-toggler-bar burger-lines"></span>
       </button>
       <div class="collapse navbar-collapse justify-content-end">
-        <ul class="navbar-nav ml-auto">
+        <ul class="navbar-nav ml-auto" v-if="user != 'guest'">
           <li class="nav-item">
             <a class="nav-link" href="#/admin/account">
               Account

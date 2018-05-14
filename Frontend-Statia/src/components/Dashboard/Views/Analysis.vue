@@ -1,21 +1,20 @@
 <template>
   <div class="analysis">
+
     <div class="container-fluid">
       <div class="row">
         <div class="col-12">
           <card>
             <template slot="header">
-              <h4 class="card-title">KPI Analysis</h4>
+              <h4 class="card-title">Matches</h4>
             </template>
+
             <select class="form-control"  v-model="kpiData" @change="getStats">
               <option id="null"></option>
-              <option value="pointsR">Points Conversion Rate</option>
-              <option value="goalsR" >Goals Conversion Rate</option>
               <option v-for="row in KPITitles" :value="row.kpi_id" >{{ row.title }}</option>
             </select>
             <br>
             <div class="Chart">
-              <h2>Matches</h2>
               <canvas ref="canvas" id="chart" width="100%" height="50%"></canvas>
             </div>
 
@@ -116,6 +115,7 @@
     mounted () {
       this.getCollected()
       this.render()
+      this.$emit('updateMatches', '1');
     },
     methods: {
       date1(date2) {
@@ -438,10 +438,10 @@
 
   .Chart {
     border-radius: 15px;
+    background-color: white;
     box-shadow: 0px 2px 15px rgba(25, 25, 25, 0.27);
-    margin:  25px 0;
-    width: 90%;
-    height: 90%;
+    width: 80%;
+    height: 80%;
     margin:auto;
   }
 
@@ -476,16 +476,6 @@
     position: absolute;
     opacity: 0;
     cursor: pointer;
-  }
-
-  /* Create a custom checkbox */
-  .checkmark {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 25px;
-    width: 25px;
-    background-color: #eee;
   }
 
   /* On mouse-over, add a grey background color */

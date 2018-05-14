@@ -24,10 +24,6 @@
                   <th scope="col">Location</th>
                   <td class = "match">{{ m.match_location }}</td>
                 </tr>
-                <tr>
-                  <th scope="col">Status</th>
-                  <td class = "match">{{ m.match_status }}</td>
-                </tr>
                 </tbody>
               </table>
 
@@ -116,7 +112,7 @@
                   </div>
                 </v-tab>
 
-                <v-tab title="Player Statistics" @click.prevent="playerStats">
+                <v-tab v-if="match[0].match_status == 'complete'" title="Player Statistics" @click.prevent="playerStats">
                   <div class="container-stats" >
                     <br>
                     <div class = "stats">
@@ -232,20 +228,12 @@
       }
     },
     mounted() {
-      this.getMatch()
-            swal("Loading Match Statistics!", {
-              icon: "success",
-              timer: 2000,
-              button: false,
-            })
+        this.getMatch()
       if (this.role == 'Coach'){
         this.playerStats()
       }
     },
     methods: {
-      sayHi(){
-        console.log('scope worked')
-      },
       date1(date2) {
         return moment(String(date2)).format('DD-MMM-YYYY')
       },
@@ -315,6 +303,14 @@
               resultsComplete.push(matchComplete);
               this.match = resultsComplete
             }
+          }
+
+          if (this.match[0].match_status == 'complete') {
+            swal("Loading Match Statistics!", {
+              icon: "success",
+              timer: 2000,
+              button: false,
+            })
           }
 
           if (this.role == 'Coach') {
@@ -701,17 +697,22 @@
           }
         }
 
-        // for (x = 0; x < awayKPI.length; x++) {
-        //   for (i = 0; i < awayKPI.length; i++) {
-        //     if (awayKPI[x].kpi_title == awayKPI[i].kpi_id && awayKPI[x].quantity > awayKPI[i].quantity) {
-        //       awayKPI.splice(i, 1);
-        //     }
-        //   }
-        // }
+        this.awayPlayerStats = awayKPI
 
-        var uniqueArrayZ = this.removeDuplicates(awayKPI, "collected_id");
+        var uniqueArrayY = this.removeDuplicates(this.collected, "title");
+        this.playerKPITitles = uniqueArrayY
 
-        this.awayPlayerStats = uniqueArrayZ
+        for (var n = 0; n < this.awayPlayerStats.length; n++) {
+          for (var m = 0; m < this.awayPlayerStats.length; m++) {
+            if (this.awayPlayerStats[n].player_name == this.awayPlayerStats[m].player_name && this.awayPlayerStats[n].kpi_title == this.awayPlayerStats[m].kpi_title) {
+              this.awayPlayerStats.splice(m, 1);
+              // this.homePlayerStats[]
+            }
+          }
+        }
+
+        this.awayPlayerStats.sort(this.compare2);
+
 
 
       },
@@ -859,6 +860,10 @@
 </script>
 <style scoped lang="scss">
   @import '../../../assets/styles/app.scss';
+
+  .viewMatch {
+    min-height: 80vh;
+  }
 
   .card {
     width: 100%;

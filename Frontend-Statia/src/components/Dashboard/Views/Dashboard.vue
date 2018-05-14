@@ -28,7 +28,7 @@
         <div class="col-12">
           <card>
             <template slot="header">
-              <h4> In Progress</h4>
+              <h4> Ready</h4>
             </template>
             <table class="table">
               <thead>
@@ -50,6 +50,8 @@
               </tbody>
             </table>
           </card>
+
+          <br>
 
           <card>
             <template slot="header">
@@ -140,6 +142,10 @@
 </script>
 <style scoped lang="scss">
   @import '../../../assets/styles/app.scss';
+
+  .dashboard {
+    min-height: 70vh;
+  }
 
   img{
     height: 50%;

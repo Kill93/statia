@@ -8,7 +8,7 @@
       </sidebar-link>
       <sidebar-link v-if="user != 'guest'" to="/admin/dashboard" >
         <i class="glyphicon glyphicon-dashboard"></i>
-        <p>Dashboard {{ selectedMatch }}</p>
+        <p>Dashboard</p>
       </sidebar-link>
       <sidebar-link v-if="user != 'guest' && role == 'Coach'" to="/admin/manage-team">
         <i class="glyphicon glyphicon-briefcase"></i>
@@ -24,11 +24,11 @@
       </sidebar-link>
       <sidebar-link v-if="user == 'guest'" to="/admin/login">
         <i class="glyphicon glyphicon-log-in"></i>
-        <p>LOGIN</p>
+        <p>Login</p>
       </sidebar-link>
       <sidebar-link v-if="user == 'guest'" to="/admin/register">
         <i class="glyphicon glyphicon-user"></i>
-        <p>REGISTER</p>
+        <p>Register</p>
       </sidebar-link>
     </side-bar>
     <div class="main-panel">
@@ -37,6 +37,8 @@
       <dashboard-content @getMatchesP="getMatchesP" @getMatchDataP="getMatchDataP"  @click="toggleSidebar" @emitPlayerID="emitPlayerID" @selectMatch="selectMatch" @updateMatches="updateMatches" @getTeam="getTeam" @getKPI_list="getKPI_list" :selectedMatch="selectedMatch" :user="user" :role="role" :userID="userID" :KPI_list="KPI_list" :players="players" :teamID="teamID" :location="location" :team_name="team_name" :team_type="team_type" :matchesDue="matchesDue" :matchesReady="matchesReady" :matchesComplete="matchesComplete" :teamExist="teamExist" :playerAccountID="playerAccountID" :matchIDs="matchIDs" :matchesP="matchesP" >
 
       </dashboard-content>
+
+      <Footer></Footer>
 
     </div>
   </div>
@@ -49,12 +51,14 @@
   import TopNavbar from './TopNavbar.vue'
   import DashboardContent from './Content.vue'
   import MobileMenu from './MobileMenu.vue'
+  import Footer from './Footer.vue'
 
   export default {
     components: {
       TopNavbar,
       DashboardContent,
-      MobileMenu
+      MobileMenu,
+      Footer
     },
     data() {
       return {
@@ -410,5 +414,10 @@
 
 <style scoped lang="scss">
   @import '../../../assets/styles/app.scss';
+
+  .wrapper {
+    height: 100%;
+  }
+
 
 </style>

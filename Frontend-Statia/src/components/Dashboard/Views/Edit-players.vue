@@ -22,7 +22,7 @@
 
                 <td><input type="text" :id="'firstName' + index" v-model="row.firstName"></td>
                 <td><input type="text"  :id="'lastName' + index" v-model="row.lastName"></td>
-                <td><input type="text" disabled = "true" :id="'userID' + index" v-model="row.userID"></td>
+                <td><input type="text" :id="'userID' + index" v-model="row.userID"></td>
                 <td>
                   <button v-on:click="removeElement(index);" type="button" class="btn btn-danger">Remove</button>
                 </td>
@@ -139,6 +139,7 @@
                   }).then(result => {
                     if (result.data.status == 'success') {
                       console.log('success')
+                      this.$emit('getTeam');
                       this.$router.push({ path: '/admin/manage-team'})
                       this.sleep(2000)
                   swal("Success! Your team has been saved!", {

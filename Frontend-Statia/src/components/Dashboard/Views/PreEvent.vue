@@ -9,7 +9,6 @@
           <div class="row">
             <div class="col-12">
               <card>
-
                 <div class = "stepOneContainer">
                   <card id = "KPI1">
                     <template slot="header">
@@ -220,7 +219,7 @@
             </tr>
             <tr>
               <th scope="col">Date</th>
-              <td class = "match">{{ m.match_date }}</td>
+              <td class = "match">{{ date1(m.match_date) }}</td>
             </tr>
             <tr>
               <th scope="col">Location</th>
@@ -266,6 +265,7 @@
   import Card from 'src/components/UIComponents/Cards/Card.vue'
   import {FormWizard, TabContent} from 'vue-form-wizard'
   import 'vue-form-wizard/dist/vue-form-wizard.min.css'
+  import moment from 'moment'
 
 
   export default {
@@ -431,6 +431,7 @@
       }
     },
     mounted() {
+        this.getKPI_list()
         this.getMatch()
         this.kpis = this.KPI_list
 
@@ -455,6 +456,9 @@
         }
     },
     methods: {
+      getKPI_list(){
+        this.$emit('getKPI_list', '1');
+      },
       moveToSelected(name, id){
         var KPI = {
           "KPI_title": name,
@@ -739,6 +743,9 @@
           console.log(error);
         });
       },
+      date1(date2) {
+        return moment(String(date2)).format('DD - MMM - YYYY')
+      },
       saveKPIList(){
         var kpiList =[]
         for (var i = 0; i < this.selectedKPIs.length; i++) {
@@ -759,6 +766,7 @@
         }).then(result => {
           if (result.data.status == 'success') {
             console.log("KPIs saved")
+            this.$router.push({ path: '/admin/dashboard'})
           }
         }).catch(error => {
           console.log(error);
@@ -778,6 +786,10 @@
   .stepOneContainer1 {
     text-align: center;
   }
+
+  #KPI1 {
+    min-height: 800px;
+  }
   .stepOneContainer {
     display: flex;
     flex-direction: row;
@@ -786,6 +798,10 @@
   .stepThreeContainer {
     display: flex;
     flex-direction: row;
+  }
+
+  .stepThreeContainer tr {
+    height: 40px;
   }
 
   #pitch {
@@ -969,5 +985,24 @@
   #overview td {
     font-size: 1.2em;
   }
+
+  .circle i , .circleS i {
+    color: white;
+    clear: both;
+    position: absolute;
+    text-align: center;
+    font-size: .97em;
+    font-weight: bold;
+    text-shadow:
+      -1px -1px 0 #000,
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+      1px 1px 0 #000;
+    margin-top: 85%;
+    margin-left: -50px;
+    width: 100px;
+  }
+
+
 
 </style>
